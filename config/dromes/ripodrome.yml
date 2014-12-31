@@ -1,0 +1,7 @@
+port_base: 8008
+site_name: Ripodrome
+site_tagline: Pushing!
+item_name: Ripo
+item_description: small word (name or nickname) that represents to <strong>someone you loved</strong> that is no longer physically between us.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> will be always <strong>PUSHING US</strong> towards the victory.

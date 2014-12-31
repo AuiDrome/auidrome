@@ -1,0 +1,7 @@
+port_base: 6006
+site_name: Byebyedrome
+site_tagline: LOH (Lots Of Hugs)
+item_name: Byebye
+item_description: small word (name or nickname) that represents to <strong>someone you love</strong> that is no longer working with us (or that is leaving us soon :(
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> is not going to be that close but <strong>QUITE CLOSE</strong>.

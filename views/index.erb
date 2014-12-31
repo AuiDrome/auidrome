@@ -1,0 +1,23 @@
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+            <div class="inner clearfix">
+              <span id="auido_title"><%= App.config.item_name %><sup>*</sup>: </span>
+              <input id="piido" type="text" name="piido" value="" size="8" />
+              <form id="piar" action="/">
+                <button type="button" class="btn"><img src="images/think.png" class="msg-icon" data-icon="think.png" /></button>
+              </form>
+              
+              <form id="tuitear" action="/tuits" method="POST">
+                <button type="button" class="btn"><img src="images/shout.png" class="msg-icon" data-icon="shout.png" /></button>
+              </form>
+            </div>
+
+          <div id="content"></div>
+
+        </div>
+
+      </div>
+    </div>

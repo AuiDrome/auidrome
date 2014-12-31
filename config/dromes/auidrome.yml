@@ -1,0 +1,7 @@
+port_base: 3003 # Will use also port_base+1
+site_name: Auidrome
+site_tagline: Getting ready to take off
+item_name: Auido
+item_description: small word that represents to <strong>someone you love</strong> that is finally between us (or that is comming soon!!!).
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a> could be</strong> FEELING US and <strong>THINKING</strong>!!! (even about THE FIX WE NEED).

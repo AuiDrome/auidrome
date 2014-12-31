@@ -1,0 +1,265 @@
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+a:active {
+  color: #777777;
+}
+a:visited {
+  color: #555555;
+}
+
+
+/* Custom default button */
+/*
+ * Base structure
+ */
+
+body {
+  font-family: 'Carrois Gothic SC', sans-serif;
+  text-align: center;
+  font-size: 38px;
+  background-color: black;
+  color: white;
+}
+.header {
+  margin: 5px;
+  font-size: 22px;
+}
+.header h1 {
+  margin: 5px;
+  font-family: 'Tangerine', serif;
+  font-size: 54px;
+  display: inline-block;
+}
+.toolbar {
+  padding-top: 9px;
+  font-size: 12px;
+}
+.toolbar strong {
+  font-size: 16px;
+}
+#content {
+  font-size: 12px;
+  color: #999;
+}
+.footer {
+  color: #999;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  font-family: 'Tangerine', serif;
+  font-size: 22px;
+}
+
+footer a, footer a:focus, footer a:hover, a:active, a:visited {
+  color: #fff;
+}
+strong {
+  color: white;
+}
+
+#piido, #piar, #tuitear {
+  color: black;
+  float: left;
+  margin: 5px;
+}
+
+span#auido_title {
+  float: left;
+}
+
+
+/* clearfix hack */
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clearfix {
+    display: inline-block;
+}
+html[xmlns] .clearfix {
+    display: block;
+}
+* html .clearfix {
+    height: 1%;
+}
+a.remove {
+  color: darkred;
+  margin-left: 4px;
+  font-size: 8px;
+}
+article {
+  margin-bottom:20px;
+}
+article img {
+  float: left;
+}
+.tuit-attributes {
+  font-size: 14px;
+  color: gray;
+}
+.tuit-attributes .date{
+  font-size: 14px;
+  color: #D3D3D3;
+}
+.tuit-attributes span {
+  display: block;
+  font-size: 18px;
+  color: white;
+}
+.dromes-links a {
+  padding: 10px;
+}
+.dromes-links {
+  display: table;
+  width: 100%;
+  height: 100%; /* For at least Firefox */
+  min-height: 100%;
+  -webkit-box-shadow: inset 0 0 100px rgba(255,111,0,.5);
+          box-shadow: inset 0 0 100px rgba(255,111,0,.5);
+}
+.dromes-links-inner {
+  display: table-cell;
+  vertical-align: top;
+  padding:30px;
+  font-size: 18px;
+}
+
+section form {
+  display: inline-block;
+}
+
+section button {
+  margin: 10px;
+  padding: 10px 20px;
+  color: black;
+  font-size: 20px;
+}
+
+.notice {color: green}
+.notice strong {color: inherit;}
+.notice .warning {color: orange}
+
+
+/* Extra markup and styles for table-esque vertical and horizontal centering */
+.site-wrapper {
+  display: table;
+  width: 100%;
+  height: 100%; /* For at least Firefox */
+  min-height: 100%;
+  -webkit-box-shadow: inset 0 0 100px rgba(255,111,0,.5);
+          box-shadow: inset 0 0 100px rgba(255,111,0,.5);
+}
+.site-wrapper-inner {
+  display: table-cell;
+  vertical-align: top;
+}
+.cover-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Padding for spacing */
+.inner {
+  padding: 30px;
+}
+
+@media (min-width: 768px) {
+  .masthead-brand {
+    float: left;
+  }
+  .masthead-nav {
+    float: right;
+  }
+}
+
+
+/*
+ * Cover
+ */
+
+.cover {
+  padding: 0 0px;
+}
+.cover .btn-lg {
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+article h1 {
+  margin: 0px;
+  display: inline-block;
+}
+
+.identities {
+  font-size: 12px;
+}
+
+/*
+ * Affix and center
+ */
+
+@media (min-width: 768px) {
+  /* Pull out the header and footer */
+  .masthead {
+    position: fixed;
+    top: 0;
+  }
+  .mastfoot {
+    position: fixed;
+    bottom: 0;
+  }
+  /* Start the vertical centering */
+  .site-wrapper-inner {
+    padding:30px;
+  }
+  /* Handle the widths */
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+  }
+}
+
+@media (min-width: 992px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 620px;
+  }
+}
+
+.status {
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  overflow:auto;
+  
+}
+
+.status .icon {
+  width:64px;
+  height:64px;
+  float: left;
+}
+
+.status p {
+  padding:5px 10px 10px 20px;
+}
+
+.avatar {
+  width:64px;
+  height:64px;
+  float:right;
+}
+

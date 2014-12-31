@@ -1,0 +1,63 @@
+
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <section id="tuit">
+            <article>
+                <img src="/images/<%= @human.auido %>.png" onerror="this.src = '/images/frijolito.png'" alt="<%= @human.auido %> avatar or default avatar" class="img-thumbnail icon"/>
+                <h1 id="auido">
+                  <%= @human.auido %>
+                </h1>
+<% if @human.identities.any? %>
+                <span class="identities">
+                (<% @human.identities.each do |identity| %><span class="identity">@<%= identity %></span><% end %>)
+                </span>
+<% end %>
+                <div class="tuit-attributes">
+                  <div>Created at
+                    <span class="date" id="date"><%= @human.created_at %></span>
+                  </div>
+
+<% if @human.madrinos.any? %>
+                  <div>Madrino<%= 's' if @human.madrinos.size > 1 %>
+                  <% @human.madrinos.each do |madrino| %><span class="madrinos">@<%= madrino %></span><% end %>
+                  </div>
+<% end %>
+
+<% (@human.attributes - Auidrome::CORE_ATTRIBUTES).each do |attr| %>
+                  <div>
+                    <%= attr %><span class="<%= attr %>">
+<%# TODO(CRITICAL): PARSE THIS ATTR BEFORE DOING ANYTHING WITH IT!!!! %>
+<%# TODO: DO ALL THIS BETTER/WELL-DONE %>
+<%   value = @human.send(attr) %>
+<%   if Auidrome::HREF_ATTRIBUTES.include?(attr) or value =~ /^https?:\/\// %>
+                      <a href="<%= @human.hreferize attr %>"><%= value %></a>
+<%   else %>
+                      <%= value %>
+<%   end %>
+                    </span>
+                  </div>
+<% end %>
+                </div>
+            </article>
+
+<% unless (@human.madrinos + @human.identities).include? current_user %>
+
+  <% unless %w{Auidrome Ripodrome}.include?(App.config.site_name) %>
+              <form action="/admin/its-me/<%= @human.auido %>">
+                <button>It's me!</button>
+              </form>
+  <% end %>
+  <% unless @human.madrinos.include? current_user %>
+              <form action="/admin/amadrinate/<%= @human.auido %>">
+                <button>Amadrinate</button>
+              </form>
+  <% end %>
+
+<% end %>
+
+          </section>
+        </div>
+      </div>
+    </div>
+

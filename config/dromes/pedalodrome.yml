@@ -1,0 +1,7 @@
+port_base: 5005
+site_name: Pedalodrome
+site_tagline: Our current RDT (Riding Dream Team)
+item_name: Pedaler
+item_description: small word (name or nickname) of <strong>someone who pedal</strong> that is a pleasure for the eyes at every stroke.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> is for sure near THE FIX WE NEED.

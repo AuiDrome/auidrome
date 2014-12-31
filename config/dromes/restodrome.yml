@@ -1,0 +1,7 @@
+port_base: 7007 # Will use also port_base+1
+site_name: Restodrome
+site_tagline: Maybe reading, hopefully writting.
+item_name: Resto
+item_description: small word (name or nickname) that represents <strong>someone you love</strong> that luckily is still between us.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: We should be listening carefully to <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> (because was here when we came).

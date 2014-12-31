@@ -1,0 +1,7 @@
+port_base: 6556
+site_name: Lovedrome
+site_tagline: People we admire a.k.a. people we love
+item_name: Target
+item_description: nickname of <strong>someone you'd like to have near you</strong> lots of days.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: Would be GREAT if <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> would kwew about THE FIX WE NEED.

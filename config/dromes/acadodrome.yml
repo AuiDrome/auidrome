@@ -1,0 +1,7 @@
+port_base: 4004
+site_name: Acadodrome
+site_tagline: Knowledge-Absorbing Races
+item_name: Absorber
+item_description: small word (name or nickname) of <strong>someone who's getting better</strong> each day to pedal in the professional world.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> is thinking, chances are that about THE FIX WE NEED.
