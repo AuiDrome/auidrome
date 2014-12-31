@@ -41,9 +41,9 @@ In the context of a project, a good long project (e.g. a human life, a collectiv
 
 The two basic actions anybody (no matter if logged or not) can do on a drome are **to think** (great!) and **to shout** (awesome... my parents don't let me do that! :)
 
-*To think* [to think ico](public/images/think.png) a name or nickname means send it to the server to share it with the people currently connected to that particular drome. The technologies involved will be discussed later.
+*To think* [to think ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/think.png) a name or nickname means send it to the server to share it with the people currently connected to that particular drome. The technologies involved will be discussed later.
 
-*To shout* [to shout ico](public/images/shout.png) it will share it as when we think but also store it by the server in its public *tuits* file available in its root with the name *tuits.json* (for example, if we send it to drome http://otaony.com:3003 we get it into the http://otaony.com:3003/tuits.json file).
+*To shout* [to shout ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/shout.png) it will share it as when we think but also store it by the server in its public *tuits* file available in its root with the name *tuits.json* (for example, if we send it to drome http://otaony.com:3003 we get it into the http://otaony.com:3003/tuits.json file).
 
 So every *shout* is converted to a *tuit* as soon as is *"heard"* by the server. That means it will have its own web page where more things can be said about *"it"*.
 
