@@ -11,4 +11,9 @@ for drome in $DROME_NAMES; do
 
   echo " > cp public/tuits/* ../auidrome/data/$drome/tuits/"
   cp          public/tuits/* ../auidrome/data/$drome/tuits/
+
+  echo " > cp public/images/* ../auidrome/data/$drome/images/"
+  cp          public/images/* ../auidrome/data/$drome/images/
+
+  echo
 done
