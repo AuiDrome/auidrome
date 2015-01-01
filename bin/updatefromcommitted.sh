@@ -15,7 +15,7 @@ for drome in $DROME_NAMES; do
   echo "git status"
   git status
   
-  read -p "Press [Enter] key to PULL & OVERWRITE $drome from the repo..."
+  read -p "Press [Enter] key to PULL & OVERWRITE $drome data from the repo (ARE YOU SURE???)..."
   
   echo "cp public/tuits.json . ; checkout public/tuits.json"
   cp public/tuits.json .
