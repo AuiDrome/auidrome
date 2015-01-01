@@ -27,10 +27,10 @@ for drome in $DROME_NAMES; do
   echo "cp public/tuits.json public/tuits.commited.json"
   cp public/tuits.json public/tuits.commited.json
 
-  echo "cp tuits.json public"
+  echo "cp stuff from data/$drome to public"
   cp data/$drome/tuits.json public
-  echo "cp data/$drome/images/* public/images"
   cp data/$drome/images/* public/images
+  cp data/$drome/tuits/* public/tuits
 
   echo 
 done
