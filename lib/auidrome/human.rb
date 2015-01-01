@@ -22,6 +22,15 @@ module Auidrome
       end
     end
 
+    def enumerable(attribute)
+      val = self.send(attribute)
+      if val.is_a? Enumerable
+        val
+      else
+        [val]
+      end
+    end
+
     def self.store human
       File.open(TUITS_DIR + "/#{human['auido']}.json","w") do |f|
         f.write(human.to_json)
