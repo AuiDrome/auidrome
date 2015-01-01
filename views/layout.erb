@@ -69,7 +69,7 @@
            ].each do |dromes| %>
         <div>
           <% dromes.map{|dromename| Auidrome::Config.new(dromename)}.each do |drome| %>
-          <a href="<%= drome.base_domain %>:<%= drome.port_base %>"><%= drome.site_name %></a>
+          <a href="http://<%= drome.base_domain %>:<%= drome.port_base %>"><%= drome.site_name %></a>
           <% end %>
         </div>
         <% end %>
