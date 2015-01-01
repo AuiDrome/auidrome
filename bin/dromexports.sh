@@ -1,6 +1,6 @@
 #!/bin/bash
 
-config_file=../config/auidromes
+config_file=$(dirname $0)/../config/auidromes
 regexp="^([^:]+):*+"
 i=0
 while read line; do
