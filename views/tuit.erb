@@ -25,15 +25,20 @@
 <% end %>
 
 <% (@human.attributes - Auidrome::CORE_ATTRIBUTES).each do |attr| %>
-                  <div>
-                    <%= attr %><span class="<%= attr %>">
 <%# TODO(CRITICAL): PARSE THIS ATTR BEFORE DOING ANYTHING WITH IT!!!! %>
-<%# TODO: DO ALL THIS BETTER/WELL-DONE %>
-<%   value = @human.send(attr) %>
-<%   if Auidrome::HREF_ATTRIBUTES.include?(attr) or value =~ /^https?:\/\// %>
-                      <a href="<%= @human.hreferize attr %>"><%= value %></a>
-<%   else %>
-                      <%= value %>
+<%# TODO: DO ALL THIS BETTER/WELL-DONE (add HAML?) %>
+<%   enum_value = @human.enumerable(attr) %>
+                  <div>
+                    <%= attr %>
+                    <span class="<%= attr %>">
+<%   enum_value.each do |value| %>
+                      <span>
+<%     if Auidrome::HREF_ATTRIBUTES.include?(attr) or value =~ /^https?:\/\// %>
+                        <a href="<%= @human.hreferize attr %>"><%= value %></a>
+<%     else %>
+                        <%= value %>
+<%     end %>
+                      </span>
 <%   end %>
                     </span>
                   </div>
