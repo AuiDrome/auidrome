@@ -37,6 +37,13 @@ EM.run do
       def file_request?
         request.path_info =~ /\/(?:images)|(?:favicon\.ico$)/
       end
+
+      def title
+        @title ||= [
+          App.config.site_name,
+          @page_title || App.config.site_tagline
+        ].join(': ')
+      end
     end
 
     before do
@@ -88,6 +95,7 @@ EM.run do
     end
 
     get "/tuits/:auido" do
+      @page_title = params[:auido]
       @human = Auidrome::Human.new(params[:auido])
       erb :tuit
     end
