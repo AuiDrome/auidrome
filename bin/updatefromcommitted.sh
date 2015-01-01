@@ -1,6 +1,9 @@
 #!/bin/bash
-
-source 'dromexports.sh'
+if [ $# -eq 0 ]; then
+  source 'dromexports.sh'
+else
+  DROME_NAMES=$1
+fi
 
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
@@ -15,7 +18,8 @@ for drome in $DROME_NAMES; do
   echo "git status"
   git status
   
-  read -p "Press [Enter] key to PULL & OVERWRITE $drome data from the repo (ARE YOU SURE???)..."
+  echo "Press [Enter] key to PULL & OVERWRITE $drome data from the repo."
+  read -p "ARE YOU SURE??? (Press Ctrl+C if not) "
   
   echo "cp public/tuits.json . ; checkout public/tuits.json"
   cp public/tuits.json .
