@@ -6,11 +6,11 @@
 
 **Drome**: a place where people can get in, and from some of them people can also get out.
 
-In the context of a project, a good long project (e.g. a human life, a collective ambition, or a business line) there are 7 basic dromes:
+In the context of a project, a good long project (e.g. a human life, a collective ambition, or a business line) there are **7 basic dromes**:
 
 1. **AuiDrome**: people that are coming soon or that are finally between us. Her or his name should be created using, of course, love, and optionally related to one of the languages of the different cultures of the world (e.g. choosing from Glottolog [1] or ISO 639-3 vocabularies [2]).
 
-2. **AcadoDrome**: people that has started to learn things about the culture or cultures of her or his parents. This "drome" has three internal stages: play, learn and grant.
+2. **AcadoDrome**: people that has started to learn things about the culture or cultures of her or his parents. This *"drome"* has three internal stages: play, learn and grant.
 
 
 3. **PedaloDrome**: people currently doing their best for the project, working hard for it but also for the pleasure that doing it returns to them.
@@ -21,9 +21,9 @@ In the context of a project, a good long project (e.g. a human life, a collectiv
 
 6. **RipoDrome**: people that is no longer between us but that their spirit keep pushing us to build a better world.
 
-7. **LoveDrome**: people we love or admire regardless of the drome to which they belong (our affection is more important than where they are).
+7. **LoveDrome**: people we love or admire regardless of the *drome* to which they belong (**our affection is more important** than the *drome* where whey should be).
 
-*Auidrome* is supposed to run on a collective or a **personal** server (i think we're not that far from that) and the data of its dromes should be easily shared (like the *Smallest Federated Wiki[3]* does) between them.
+*Auidrome* is supposed to run on a collective or a **personal** server (i think we're not that far from that) and the data of its *dromes* should be easily shared (like the *Smallest Federated Wiki[3]* does) between them.
 
 *Auidrome* is also desired to become *Hyperbooted[4]* to guarantee always **the rights of the user**.
 
@@ -39,11 +39,11 @@ In the context of a project, a good long project (e.g. a human life, a collectiv
 
 ## Think and Shout (and dance if you want:).
 
-The two basic actions anybody (no matter if logged or not) can do on a drome are **to think** (great!) and **to shout** (awesome... my parents don't let me do that! :)
+The two basic actions anybody (no matter if logged or not) can do on a *drome* are **to think** (great!) and **to shout** (awesome... my parents don't let me do that! :)
 
-*To think* [to think ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/think.png) a name or nickname means send it to the server to share it with the people currently connected to that particular drome. The technologies involved will be discussed later.
+*To think* [to think ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/think.png) a name or nickname means send it to the server to share it with the people currently connected to that particular *drome*. The technologies involved will be discussed later.
 
-*To shout* [to shout ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/shout.png) it will share it as when we think but also store it by the server in its public *tuits* file available in its root with the name *tuits.json* (for example, if we send it to drome http://otaony.com:3003 we get it into the http://otaony.com:3003/tuits.json file).
+*To shout* [to shout ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/shout.png) it will share it as when we think but also store it by the server in its public *tuits* file available in its root with the name *tuits.json* (for example, if we send it to *drome* http://otaony.com:3003 we get it into the http://otaony.com:3003/tuits.json file).
 
 So every *shout* is converted to a *tuit* as soon as is *"heard"* by the server. That means it will have its own web page where more things can be said about *"it"*.
 
@@ -51,9 +51,9 @@ So every *shout* is converted to a *tuit* as soon as is *"heard"* by the server.
 
 The basic idea is **amadrinate to login**. *"To amadrinate"* is a very popular verb in the *dromolands* which means **"to know"** something good/cool about that person to be told to anyone interested.
 
-It should not be difficult to find someone to amadrinate so in order to get logged Auidrome force us to do it pushing the **Amadrinate** button on the *tuit* page of the person. We can amadrinate to the same person as many times as needed in order to login if no more *"amadrinable"* new people has appeared on that drome (something good if we're trying to login in the Ripodrome;)
+It should not be difficult to find someone to amadrinate so in order to get logged Auidrome force us to do it pushing the **Amadrinate** button on the *tuit* page of the person. We can amadrinate to the same person as many times as needed in order to login if no more *"amadrinable"* new people has appeared on that *drome* (something good if we're trying to login in the Ripodrome;)
 
-If currently we are not part of the drome and we think we should, we can get logged also "shouting" our favourite nickname (the one that the people use to call us that is more cool for us) and then pushing the *It's me!* button on *the tuit page*.
+If currently we are not part of the *drome* and we think we should, we can get logged also "shouting" our favourite nickname (the one that the people use to call us that is more cool for us) and then pushing the *It's me!* button on *the tuit page*.
 
 ## 3 Access Levels & 3 Auidrome Repositories **WARNING: NIY (Not Implemented Yet) stuff**
 
@@ -76,7 +76,7 @@ If you want to test it make the next steps:
 
 ## Config and run...
 
-A Auidrome site, or "a drome", is launched running the *bin/auidrome.rb* script.
+A Auidrome site, or *"a drome"*, is launched running the *bin/auidrome.rb* script.
 
 Any *drome* should have its configuration on the *config/dromes* directory.
 
