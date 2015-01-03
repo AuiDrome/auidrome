@@ -120,7 +120,7 @@ article img {
 .dromes-links a {
   padding: 10px;
 }
-.dromes-links {
+.dromes-links, .notice {
   display: table;
   width: 100%;
   height: 100%; /* For at least Firefox */
@@ -128,11 +128,17 @@ article img {
   -webkit-box-shadow: inset 0 0 100px rgba(255,111,0,.5);
           box-shadow: inset 0 0 100px rgba(255,111,0,.5);
 }
-.dromes-links-inner {
+.dromes-links-inner, .notice-inner {
   display: table-cell;
   vertical-align: top;
   padding:30px;
   font-size: 18px;
+}
+.notice {color: green}
+.notice strong {color: inherit;}
+.notice .warning {color: orange}
+.notice a {
+  font-weight: bold;
 }
 
 section form {
@@ -145,11 +151,6 @@ section button {
   color: black;
   font-size: 20px;
 }
-
-.notice {color: green}
-.notice strong {color: inherit;}
-.notice .warning {color: orange}
-
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {

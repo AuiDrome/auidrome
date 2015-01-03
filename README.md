@@ -41,19 +41,25 @@ In the context of a project, a good long project (e.g. a human life, a collectiv
 
 The two basic actions anybody (no matter if logged or not) can do on a *drome* are **to think** (great!) and **to shout** (awesome... my parents don't let me do that! :)
 
-*To think* [to think ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/think.png) a name or nickname means send it to the server to share it with the people currently connected to that particular *drome*. The technologies involved will be discussed later.
+*To think* [to think ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/think.png) a name or nickname means send it to the server to share it with the people currently connected to that particular *drome* in that moment (through WebSockets).
 
-*To shout* [to shout ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/shout.png) it will share it as when we think but also store it by the server in its public *tuits* file available in its root with the name *tuits.json* (for example, if we send it to *drome* http://otaony.com:3003 we get it into the http://otaony.com:3003/tuits.json file).
+*To shout* [to shout ico](https://raw.githubusercontent.com/AuiDrome/auidrome/master/public/images/shout.png) it will share it as when we think but also will store it by the server in its public *tuits* file available in its root with the name *tuits.json* (for example, if we send it to *drome* http://otaony.com:3003 we get it into the http://otaony.com:3003/tuits.json file).
 
 So every *shout* is converted to a *tuit* as soon as is *"heard"* by the server. That means it will have its own web page where more things can be said about *"it"*.
+
+(Notice: shout/tuits in the Auidrome as well as in some parts of the code are called "auidos").
 
 ## Login and "to amadrinate"
 
 The basic idea is **amadrinate to login**. *"To amadrinate"* is a very popular verb in the *dromolands* which means **"to know"** something good/cool about that person to be told to anyone interested.
 
-It should not be difficult to find someone to amadrinate so in order to get logged Auidrome force us to do it pushing the **Amadrinate** button on the *tuit* page of the person. We can amadrinate to the same person as many times as needed in order to login if no more *"amadrinable"* new people has appeared on that *drome* (something good if we're trying to login in the Ripodrome;)
+It should not be difficult to find someone to amadrinate so in order to get logged Auidrome force us to do it pushing the **Amadrinate** button on the *tuit* page of a person. We can amadrinate to the same person as many times as needed in order to login if no more *"amadrinable"* new people has appeared on that *drome* (something good if we're trying to login in the Ripodrome;)
 
-If currently we are not part of the *drome* and we think we should, we can get logged also by "shouting" our favourite nickname (the one that the people use to call us that is more cool for us) and then pushing the *It's me!* button on *our tuit page*.
+If currently we are not part of the *drome* and we think we should, we can get logged also by *"shouting"* our favourite nickname (the one that the people use to call us that is more cool for us) and then pushing the *It's me!* button on *our tuit page*.
+
+We can do something similar by *"shouting"* the nickname of someone you appreciate, clicking in her or his name in the warning message, and finally pushing the **Amadrinate** button.
+
+An "*amadrinated*" shout/tuit/auido has its own file in the *tuits* directory and (not only for that reason:) is considered a *Human* (as defined in *lib/auidrome/human.rb*).
 
 ## 3 Access Levels & 3 Auidrome Repositories **WARNING: NIY (Not Implemented Yet) stuff**
 

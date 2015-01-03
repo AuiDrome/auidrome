@@ -31,6 +31,8 @@ EM.run do
       end
 
       def current_user
+        # current user name for the auth provider
+        #   e.g. session['twitter'] => colgado
         session[:provider] && session[session[:provider]]
       end
 
@@ -82,17 +84,39 @@ EM.run do
     end
 
     post "/tuits" do
-      puts "Somebody has shouted: ¡¡¡#{params[:piido]}!!!"
+      piido = params[:piido]
+      puts (current_user || 'Somebody') + " has shouted: ¡¡¡#{piido}!!!"
       current_tuits = Auidrome::Tuit.current_stored_tuits
-      if current_tuits[params[:piido]]
-        puts "  ... but #{params[:piido]} have been shouted before. :("
-        # TODO: some kind of feedback to the user
+      if current_tuits[piido] 
+        # The piído is in our tuits.json but we still don't know anything about madrinos.
+        amadrinated_at = nil
       else
-        current_tuits[params[:piido]] = Time.now.utc
+        # We assume current_user exist, so the piido will be "amadrinated" right now.
+        amadrinated_at = Time.now.utc
+        current_tuits[piido] = amadrinated_at
         Auidrome::Tuit.store_these current_tuits
       end
-      redirect to('/')
-    end
+
+      if current_user # piído + madrino = human!!!
+        if amadrinated_at
+          msg = 'Great, at last <strong>'+piido+'</strong> is here and amadrinated <strong>by you</strong>. Thanks!'
+        else
+          msg = "We've added you as madrino of <strong>"+piido+"</strong>, thanks!"
+        end
+        human = Auidrome::Human.read(piido)
+        human['madrinos'] << current_user unless human['madrinos'].include?(current_user)
+        Auidrome::Human.store human
+        return_to 'tuits/' + piido, msg
+      else
+        piido_link = %@<a href="/tuits/#{piido}">#{piido}</a>@
+        if amadrinated_at
+          msg = piido_link + ' is now between us, but <strong>WITH NO MADRINOS</strong> :(...'
+        else
+          msg = 'We already knew '+piido_link+". Notice you're NOT currently logged."
+        end
+        return_to '/', '<span class="warning">'+msg+'</span>'
+      end
+     end
 
     get "/tuits/:auido" do
       @page_title = params[:auido]
