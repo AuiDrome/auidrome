@@ -1,11 +1,9 @@
-[submodule "AuidromePublicData"]
+[submodule "data/public"]
 	path = data/public
-	url = http://github.com/AuiDrome/auidrome_public_data
-
-[submodule "AuidromeProtectedData"]
+	url = ../auidrome_public_data/
+[submodule "data/protected"]
 	path = data/protected
-	url = http://github.com/AuiDrome/auidrome_protected_data
-
-[submodule "AuidromePrivateData"]
+	url = ../auidrome_protected_data/
+[submodule "data/private"]
 	path = data/private
-	url = http://github.com/AuiDrome/auidrome_private_data
+	url = ../auidrome_private_data/
