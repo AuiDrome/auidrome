@@ -53,7 +53,7 @@ The basic idea is **amadrinate to login**. *"To amadrinate"* is a very popular v
 
 It should not be difficult to find someone to amadrinate so in order to get logged Auidrome force us to do it pushing the **Amadrinate** button on the *tuit* page of the person. We can amadrinate to the same person as many times as needed in order to login if no more *"amadrinable"* new people has appeared on that *drome* (something good if we're trying to login in the Ripodrome;)
 
-If currently we are not part of the *drome* and we think we should, we can get logged also "shouting" our favourite nickname (the one that the people use to call us that is more cool for us) and then pushing the *It's me!* button on *the tuit page*.
+If currently we are not part of the *drome* and we think we should, we can get logged also by "shouting" our favourite nickname (the one that the people use to call us that is more cool for us) and then pushing the *It's me!* button on *our tuit page*.
 
 ## 3 Access Levels & 3 Auidrome Repositories **WARNING: NIY (Not Implemented Yet) stuff**
 
@@ -63,7 +63,9 @@ Auidrome has the three classical levels of access to the data of the user: **pub
 
 2. People idendified that are currently members of the *pedalodrome* (and even members of the *restodrome*) can see **the protected data** of the user. That info will be stored in a different repository administrated by the collective interested in the project the people is *pedaling* for in the *pedalodrome* (examples of the protected data could be *the email* account or *company phone number* of the user).
 
-3. Only the user (and eventually others that have been granted to have it) have access to the user's **private data**. That info will be in YAR (Yet Another Repository, the private one) and will store data as the personal telephone of the user or the MAC of her or his Smartphone.
+3. Only the user (and eventually others that have been granted by the user to have it) have access to the user's **private data**. That info will be in YAR (Yet Another Repository, the private one) and will store data as the personal telephone of the user or the MAC of her or his Smartphone.
+
+Follows in doc/todoes_and_ideas.md
 
 ## Installation
 Application written in Ruby+Sinatra (+ WebSockets to share "auidos" between people simultaneusly connected to the server).
