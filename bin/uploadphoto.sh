@@ -6,8 +6,6 @@ if [ $# -eq 2 ]; then
 
   echo "scp $image otaony.com:dromes/$drome/public/images/"
   scp       $image otaony.com:dromes/$drome/public/images/
-  echo "scp $image otaony.com:dromes/auidrome/data/$drome/images/"
-  scp       $image otaony.com:dromes/auidrome/data/$drome/images/
 else
-  echo 'Usage: deployphoto.sh DROME FILE'
+  echo 'Usage: uploadphoto.sh DROME FILE'
 fi
