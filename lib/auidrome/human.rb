@@ -2,8 +2,8 @@ require 'json'
 module Auidrome
   # A "human" is just a tuit with aditional attributes and a bit of magic :)
   class Human
-    def initialize auido
-      @json = Human.read(auido)
+    def initialize auido, reader
+      @json = Human.read(auido, reader)
     end
 
     def attributes
@@ -32,17 +32,27 @@ module Auidrome
     end
 
     def self.store human
-      File.open(TUITS_DIR + "/#{human['auido']}.json","w") do |f|
+      File.open(PUBLIC_TUITS_DIR + "/#{human['auido']}.json","w") do |f|
         f.write(human.to_json)
       end 
     end
 
-    def self.read auido
-      if File.exists?("#{TUITS_DIR}/#{auido}.json")
-        JSON.parse File.read("#{TUITS_DIR}/#{auido}.json")
+    def self.read auido, reader = nil
+      public_data = Tuit.read_file("#{PUBLIC_TUITS_DIR}/#{auido}.json") || Tuit.read_from_tuits_file(auido)
+
+      protected_data = if reader and Auidrome::AccessLevel.can_read_protected?(reader, public_data)
+        Tuit.read_file("#{PROTECTED_TUITS_DIR}/#{auido}.json") || {}  
       else
-        Tuit.read_from_tuits_file auido
+        {}
       end
+
+      private_data = if reader and Auidrome::AccessLevel.can_read_private?(reader, public_data)
+        Tuit.read_file("#{PRIVATE_TUITS_DIR}/#{auido}.json") || {}  
+      else
+        {}
+      end
+
+      private_data.merge(protected_data.merge(public_data))
     end
 
   end

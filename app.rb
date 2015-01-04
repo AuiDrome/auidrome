@@ -116,11 +116,11 @@ EM.run do
         end
         return_to '/', '<span class="warning">'+msg+'</span>'
       end
-     end
+    end
 
     get "/tuits/:auido" do
       @page_title = params[:auido]
-      @human = Auidrome::Human.new(params[:auido])
+      @human = Auidrome::Human.new(params[:auido], current_user)
       erb :tuit
     end
 

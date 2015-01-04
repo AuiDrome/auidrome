@@ -23,5 +23,9 @@ module Auidrome
           'madrinos' => []
         }
       end
+
+      def self.read_file(filepath)
+        JSON.parse(File.read(filepath)) if File.exists?(filepath)
+      end
   end
 end
