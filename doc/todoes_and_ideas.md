@@ -1,10 +1,18 @@
 # AuiDrome
 
-## TODOes and Ideas (in Spanish)
+## TODOes
+
+* Event Machine and accesses to disk: study (me) and fix.
+
+* "To think" button should also behave like a "search in our dromes" button.
+
+* Madrinos in the Auidrome should be able to choose a Glottolog language/dialect if desired.
+
+## Ideas (Kind of "definition" in Spanish)
 
 Un pequeño cajón desastre en castellano de donde deberían ir saliendo cosas hacia Trello, el código y el README.md
 
-* una persona identificada que forme parte del pedalódromo podrá ver la información existente para una persona en data/protected
+* una persona identificada que forme parte del pedalódromo podrá ver la información protegida (data/protected) de cualquier persona
 
 * los usuarios pueden editar todas sus propiedades
 
