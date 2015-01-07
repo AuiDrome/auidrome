@@ -98,14 +98,12 @@ EM.run do
       end
 
       if current_user # piído + madrino = human!!!
+        Auidrome::Human.add_madrino! piido, current_user
         if amadrinated_at
           msg = 'Great, at last <strong>'+piido+'</strong> is here and amadrinated <strong>by you</strong>. Thanks!'
         else
           msg = "We've added you as madrino of <strong>"+piido+"</strong>, thanks!"
         end
-        human = Auidrome::Human.read(piido)
-        human['madrinos'] << current_user unless human['madrinos'].include?(current_user)
-        Auidrome::Human.store human
         return_to 'tuits/' + piido, msg
       else
         piido_link = %@<a href="/tuits/#{piido}">#{piido}</a>@
@@ -130,12 +128,11 @@ EM.run do
 
     get "/admin/its-me/:auido" do
       auido = params['auido']
-      human = Auidrome::Human.read(auido)
-      if human['identities'].include? current_user
+      human = Auidrome::Human.new(auido)
+      if human.identities.include? current_user
         msg = '<span class="warning">Yes, you definitely are <strong>' + auido + '</strong> :)</span>.'
       else
-        human['identities'] << current_user 
-        Auidrome::Human.store human
+        human.add_identity! current_user 
         msg = "Added <strong>#{current_user}</strong> as identity of <strong>" + auido + '</strong>.'
       end
       return_to 'tuits/' + auido, msg
@@ -143,12 +140,11 @@ EM.run do
 
     get "/admin/amadrinate/:auido" do
       auido = params['auido']
-      human = Auidrome::Human.read(auido)
-      if human['madrinos'].include? current_user
+      human = Auidrome::Human.new(auido)
+      if human.madrinos.include? current_user
         msg = '<span class="warning">You already was madrino of <strong>' + auido + '</strong></span>.'
       else
-        human['madrinos'] << current_user 
-        Auidrome::Human.store human
+        human.add_madrino! current_user 
         msg = "Now you are a madrino of <strong>" + auido + '</strong>. GREAT!!!'
       end
       return_to 'tuits/' + auido, msg

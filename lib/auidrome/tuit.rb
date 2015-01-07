@@ -15,16 +15,14 @@ module Auidrome
         end
       end
 
-      def self.read_from_tuits_file auido
+      def self.read_from_index_file auido
         {
           'created_at' => Tuit.current_stored_tuits[auido] || 'NOT FOUND!?!?',
-          'auido' => auido,
-          'identities' => [],
-          'madrinos' => []
+          'auido' => auido
         }
       end
 
-      def self.read_file(filepath)
+      def self.read_json(filepath)
         File.exists?(filepath) ? JSON.parse(File.read(filepath)) : {}
       end
   end

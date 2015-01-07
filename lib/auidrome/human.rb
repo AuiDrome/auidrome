@@ -2,23 +2,33 @@ require 'json'
 module Auidrome
   # A "human" is just a tuit with aditional attributes and a bit of magic :)
   class Human
-    def initialize auido, reader
-      @json = Human.read(auido, reader)
+    def initialize auido, reader = nil
+      @hash = Human.read_json(auido, reader)
+      @hash['identities'] ||= []
+      @hash['madrinos'] ||= []
+    end
+
+    def hash
+      @hash
     end
 
     def attributes
-      @json.keys
+      @hash.keys
+    end
+
+    def values
+      @hash.values
     end
 
     def method_missing(method, *args, &block)
-      @json[method.to_s] || super
+      @hash[method.to_s] || super
     end
 
     def hreferize method
-      if @json[method] =~ /^http/
-        @json[method]
+      if @hash[method] =~ /^http/
+        @hash[method]
       else
-        "http://#{@json[method]}"
+        "http://#{@hash[method]}"
       end
     end
 
@@ -31,22 +41,28 @@ module Auidrome
       end
     end
 
-    def self.store human
-      File.open(PUBLIC_TUITS_DIR + "/#{human['auido']}.json","w") do |f|
-        f.write(human.to_json)
+    def save_json!
+      File.open(PUBLIC_TUITS_DIR + "/#{@hash['auido']}.json","w") do |f|
+        f.write(hash.to_json)
       end 
     end
 
-    def self.read auido, reader = nil
-      tuit_data = Tuit.read_from_tuits_file(auido)
-      public_data = Tuit.read_file("#{PUBLIC_TUITS_DIR}/#{auido}.json")
+    def self.store_json hash
+      File.open(PUBLIC_TUITS_DIR + "/#{hash['auido']}.json","w") do |f|
+        f.write(hash.to_json)
+      end 
+    end
+
+    def self.read_json auido, reader = nil
+      tuit_data = Tuit.read_from_index_file(auido)
+      public_data = Tuit.read_json("#{PUBLIC_TUITS_DIR}/#{auido}.json")
       protected_data = if Auidrome::AccessLevel.can_read_protected?(reader, public_data)
-        Tuit.read_file("#{PROTECTED_TUITS_DIR}/#{auido}.json")
+        Tuit.read_json("#{PROTECTED_TUITS_DIR}/#{auido}.json")
       else
         {}
       end
       private_data = if Auidrome::AccessLevel.can_read_private?(reader, public_data)
-        Tuit.read_file("#{PRIVATE_TUITS_DIR}/#{auido}.json")
+        Tuit.read_json("#{PRIVATE_TUITS_DIR}/#{auido}.json")
       else
         {}
       end
@@ -60,5 +76,20 @@ module Auidrome
       )
     end
 
+    def add_identity! user
+      @hash['identities'] << user unless @hash['identities'].include? user
+      save_json!
+    end
+
+    def add_madrino! user
+      @hash['madrinos'] << user unless @hash['madrinos'].include? user
+      save_json!
+    end
+
+    def self.add_madrino! auido, user
+      human = Auidrome::Human.new(auido, user)
+      human.hash['madrinos'] << user unless human.madrinos.include? user
+      Auidrome::Human.store_json human.hash
+    end
   end
 end
