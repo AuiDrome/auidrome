@@ -33,7 +33,7 @@
                     <span class="<%= attr %>">
 <%   enum_value.each do |value| %>
                       <span>
-<%     if Auidrome::HREF_ATTRIBUTES.include?(attr) or value =~ /^https?:\/\// %>
+<%     if Auidrome::HREF_ATTRIBUTES.include?(attr.downcase) or value =~ /^https?:\/\// %>
                         <a href="<%= @human.hreferize attr %>"><%= value %></a>
 <%     else %>
                         <%= value %>
