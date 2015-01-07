@@ -38,21 +38,26 @@ module Auidrome
     end
 
     def self.read auido, reader = nil
-      public_data = Tuit.read_file("#{PUBLIC_TUITS_DIR}/#{auido}.json") || Tuit.read_from_tuits_file(auido)
-
-      protected_data = if reader and Auidrome::AccessLevel.can_read_protected?(reader, public_data)
-        Tuit.read_file("#{PROTECTED_TUITS_DIR}/#{auido}.json") || {}  
+      tuit_data = Tuit.read_from_tuits_file(auido)
+      public_data = Tuit.read_file("#{PUBLIC_TUITS_DIR}/#{auido}.json")
+      protected_data = if Auidrome::AccessLevel.can_read_protected?(reader, public_data)
+        Tuit.read_file("#{PROTECTED_TUITS_DIR}/#{auido}.json")
+      else
+        {}
+      end
+      private_data = if Auidrome::AccessLevel.can_read_private?(reader, public_data)
+        Tuit.read_file("#{PRIVATE_TUITS_DIR}/#{auido}.json")
       else
         {}
       end
 
-      private_data = if reader and Auidrome::AccessLevel.can_read_private?(reader, public_data)
-        Tuit.read_file("#{PRIVATE_TUITS_DIR}/#{auido}.json") || {}  
-      else
-        {}
-      end
-
-      private_data.merge(protected_data.merge(public_data))
+      private_data.merge(
+        protected_data.merge(
+          public_data.merge(
+            tuit_data
+          )
+        )
+      )
     end
 
   end

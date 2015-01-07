@@ -25,7 +25,7 @@ module Auidrome
       end
 
       def self.read_file(filepath)
-        JSON.parse(File.read(filepath)) if File.exists?(filepath)
+        File.exists?(filepath) ? JSON.parse(File.read(filepath)) : {}
       end
   end
 end
