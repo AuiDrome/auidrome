@@ -1,9 +1,14 @@
 #!/bin/bash
 
-source 'dromexports.sh'
+if [ $# -eq 0 ]; then
+  source 'dromexports.sh'
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_rsa
+  option=-r
+else
+  DROME_NAMES=$1
+fi
 
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
 for drome in $DROME_NAMES; do
   echo "**********************************"
   echo "*** $drome"
@@ -17,7 +22,10 @@ for drome in $DROME_NAMES; do
   echo " > git status"
   git status
   
-  read -p "Press [Enter] key to start pulling $drome..."
+
+  if [ $# -eq 0 ]; then
+    read -p "Press [Enter] key to start pulling $drome..."
+  fi
   
   echo "Guardamos una copia de los tuits en actualmente en producción..."
   echo " > cp public/tuits.json ."
@@ -39,4 +47,7 @@ for drome in $DROME_NAMES; do
   echo " > cp tuits.json public"
   cp tuits.json public
 done
-killall ssh-agent
+
+if [ $# -eq 0 ]; then
+  killall ssh-agent
+fi
