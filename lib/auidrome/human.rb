@@ -24,6 +24,14 @@ module Auidrome
       @hash[method.to_s] || super
     end
 
+    def core_attributes
+      Auidrome::CORE_ATTRIBUTES # no more, no less, by now...
+    end
+
+    def linkable_attribute? attribute
+      Auidrome::HREF_ATTRIBUTES.include?(attribute.downcase) or @hash[attribute] =~ /^https?:\/\//
+    end
+
     def hreferize method
       if @hash[method] =~ /^http/
         @hash[method]

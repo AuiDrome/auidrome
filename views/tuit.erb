@@ -24,7 +24,7 @@
                   </div>
 <% end %>
 
-<% (@human.attributes - Auidrome::CORE_ATTRIBUTES).each do |attr| %>
+<% (@human.attributes - @human.core_attributes).each do |attr| %>
 <%# TODO(CRITICAL): PARSE THIS ATTR BEFORE DOING ANYTHING WITH IT!!!! %>
 <%# TODO: DO ALL THIS BETTER/WELL-DONE (add HAML?) %>
 <%   enum_value = @human.enumerable(attr) %>
@@ -33,7 +33,8 @@
                     <span class="<%= attr %>">
 <%   enum_value.each do |value| %>
                       <span>
-<%     if Auidrome::HREF_ATTRIBUTES.include?(attr.downcase) or value =~ /^https?:\/\// %>
+
+<%     if @human.linkable_attribute? attr %>
                         <a href="<%= @human.hreferize attr %>"><%= value %></a>
 <%     else %>
                         <%= value %>
