@@ -1,9 +1,9 @@
 [submodule "data/public"]
 	path = data/public
-	url = ../auidrome_public_data/
+	url = https://github.com/AuiDrome/auidrome_public_data.git
 [submodule "data/protected"]
 	path = data/protected
-	url = ../auidrome_protected_data/
+	url = git@github.com:the-cocktail/auidrome_protected_data.git
 [submodule "data/private"]
 	path = data/private
-	url = ../auidrome_private_data/
+	url = https://github.com/AuiDrome/auidrome_private_data.git
