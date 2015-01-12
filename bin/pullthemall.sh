@@ -1,7 +1,7 @@
 #!/bin/bash
+source 'dromeslib.sh'
 
 if [ $# -eq 0 ]; then
-  source 'dromexports.sh'
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_rsa
   option=-r

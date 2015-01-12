@@ -1,41 +1,35 @@
 #!/bin/bash
+source 'dromeslib.sh'
+
 if [ $# -eq 0 ]; then
-  source 'dromexports.sh'
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_rsa
 else
+  echo "Running only for $1"
   DROME_NAMES=$1
 fi
 
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
 for drome in $DROME_NAMES; do
   echo "**********************************"
   echo "*** $drome"
   echo "**********************************"
   
-  echo "cd ../$drome"
-  cd ../$drome
+  run_command "cd ../$drome"
+  run_command "git status"
+
+  echo "Copia de seguridad de $drome's public/tuits.json:"
+  echo "cp public/tuits.json ."
+  run_command "cp public/tuits.json ."
+  echo "WARNING: Pressing [Enter] you'll PULL & OVERWRITE $drome uncommited data."
+  echo "         Please, think it twice and press Ctrl+C if you're not sure about it."
   
-  echo "git status"
-  git status
-  
-  echo "Press [Enter] key to PULL & OVERWRITE $drome data from the repo."
-  read -p "ARE YOU SURE??? (Press Ctrl+C if not) "
-  
-  echo "cp public/tuits.json . ; checkout public/tuits.json"
-  cp public/tuits.json .
-  git checkout public/tuits.json
-
-  echo "git pull"
-  git pull
-
-  echo "cp public/tuits.json public/tuits.commited.json"
-  cp public/tuits.json public/tuits.commited.json
-
-  echo "cp stuff from data/$drome to public"
-  cp data/$drome/tuits.json public
-  cp data/$drome/images/* public/images
-  cp data/$drome/tuits/* public/tuits
-
-  echo 
+  ask_and_run "git checkout public/tuits.json"
+  ask_and_run "git pull"
+  run_command "cp public/tuits.json public/tuits.commited.json"
+  ask_and_run "cp data/public/$drome/tuits.json public"
+  ask_and_run "cp data/public/$drome/tuits/* public/tuits"
+  ask_and_run "cp data/public/$drome/images/* public/images"
 done
-killall ssh-agent
+if [ $# -eq 0 ]; then
+  killall ssh-agent
+fi
