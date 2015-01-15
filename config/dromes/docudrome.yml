@@ -1,0 +1,7 @@
+port_base: 10001
+site_name: Docudrome
+site_tagline: Knowledge & Fun
+item_name: Doc
+item_description: Peace of data shorted that deserves to be cosumed by the people
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: For sure <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> is important to reach THE FIX we need.

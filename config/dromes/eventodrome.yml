@@ -1,0 +1,7 @@
+port_base: 30003
+site_name: Eventodrome
+site_tagline: Let's get together!
+item_name: Event
+item_description: Party name :)
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: Chances are that <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> let our inspirations fly free.

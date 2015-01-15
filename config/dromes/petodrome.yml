@@ -1,0 +1,7 @@
+port_base: 3333
+site_name: Petodrome
+site_tagline: They do NOT need words.
+item_name: Pet
+item_description: It's around us, and we love it.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> hopes the best from us.

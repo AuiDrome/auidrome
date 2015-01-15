@@ -1,0 +1,7 @@
+port_base: 20002
+site_name: Projectdrome
+site_tagline: Pedalodromes everywhere!!!
+item_name: Project
+item_description: Name behind that amazing idea
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: Chances are that <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> are letting some people have a great time.
