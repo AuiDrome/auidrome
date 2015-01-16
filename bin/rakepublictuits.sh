@@ -1,19 +1,15 @@
 #!/bin/bash
+source 'bin/dromeslib.sh'
 
-source 'bin/dromexports.sh'
+if [ $# -eq 0 ]; then
+  dromes=$DROME_NAMES
+else
+  dromes=$1
+fi
 
-for drome in $DROME_NAMES; do
-  echo " > cd ../$drome"
-  cd          ../$drome
-
-  echo " > cp public/tuits.json ../auidrome/data/public/$drome"
-  cp          public/tuits.json ../auidrome/data/public/$drome
-
-  echo " > cp public/tuits/* ../auidrome/data/public/$drome/tuits/"
-  cp          public/tuits/* ../auidrome/data/public/$drome/tuits/
-
-  echo " > cp public/images/* ../auidrome/data/public/$drome/images/"
-  cp          public/images/* ../auidrome/data/public/$drome/images/
-
-  echo
+for drome in $dromes; do
+  run_command "cd ../$drome"
+  run_command "cp public/tuits.json ../auidrome/data/public/$drome"
+  run_command "cp public/tuits/* ../auidrome/data/public/$drome/tuits/"
+  run_command "cp public/images/* ../auidrome/data/public/$drome/images/"
 done

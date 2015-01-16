@@ -106,4 +106,4 @@ Much more important than my economical contribution to that project is for me th
 
 ## License
 
-*PEEDODROME* is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+*AuiDrome* is released under the [MIT License](http://www.opensource.org/licenses/MIT).

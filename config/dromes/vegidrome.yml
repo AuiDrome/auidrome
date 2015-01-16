@@ -1,0 +1,7 @@
+port_base: 8888
+site_name: Vegidrome
+site_tagline: Such beauty that sometimes we even eat them :)
+item_name: Vegithing
+item_description: Air won't be the same without them.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> is part of our Test Suite.

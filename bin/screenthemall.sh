@@ -1,6 +1,5 @@
 #!/bin/bash
-
-source 'bin/dromexports.sh'
+source 'bin/dromeslib.sh'
 
 if [ $# -eq 0 ]; then
   option=-r

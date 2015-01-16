@@ -1,0 +1,7 @@
+port_base: 7557
+site_name: Fictiondrome
+site_tagline: Fantasy people
+item_name: Thing
+item_description: nickname of someone you or someone else imagine.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: For sure <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> kwows THE FIX we need.
