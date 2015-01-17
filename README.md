@@ -23,7 +23,11 @@ In the context of a project, a good long project (e.g. a human life, a collectiv
 
 7. **LoveDrome**: people we love or admire regardless of the *drome* to which they belong (**our affection is more important** than the *drome* where whey should be).
 
-*Auidrome* is supposed to run on a collective or a **personal** server (i think we're not that far from that) and the data of its *dromes* should be easily shared (like the *Smallest Federated Wiki[3]* does) between them.
+That said, those 7 basic dromes with an aditional one, the **FictionDrome**, give us the places where **a human being** can be in the head of a person that feels part of **a project**. That *project* would be the part of another *"first-level drome"*, **the projectDrome**.
+
+All *dromes* needed to semantically store important information handled by a person will be discussed and defined using Loomio[5] as decision-making tool.
+
+*Auidrome* is supposed to run on a **collective and personal server** and the data of its different *dromes* (stored in simple JSON files) should be easily shared between servers (ideally using federated sharing similar to the *Smallest Federated Wiki[3]* one).
 
 *Auidrome* is also desired to become *Hyperbooted[4]* to guarantee always **the rights of the user**.
 
@@ -36,6 +40,8 @@ In the context of a project, a good long project (e.g. a human life, a collectiv
 [3] [https://github.com/WardCunningham/Smallest-Federated-Wiki](https://github.com/WardCunningham/Smallest-Federated-Wiki)
 
 [4] [http://hyperboot.org](http://hyperboot.org)
+
+[5] [https://www.loomio.org/g/t4295q8g/auidrome](https://www.loomio.org/g/t4295q8g/auidrome)
 
 ## Think and Shout (and dance if you want:).
 
@@ -61,11 +67,11 @@ We can do something similar by *"shouting"* the nickname of someone you apprecia
 
 An "*amadrinated*" shout/tuit/auido has its own file in the *tuits* directory and (not only for that reason:) is considered a *Human* (as defined in *lib/auidrome/human.rb*).
 
-## 3 Access Levels & 3 Auidrome Repositories **WARNING: NIY (Not Implemented Yet) stuff**
+## 3 Access Levels & 3 Auidrome Repositories **WARNING: Work (even more) in progress**
 
 Auidrome has the three classical levels of access to the data of the user: **public**, **protected** and **private**:
 
-1. **Public**: The *tuits* are public in the *public/tuits.json* file and become *humans* in the *public/tuits* directory ([Iria](data/auidrome/tuits/IRIA.json) for example) when someone *amadrinates* them. Ideally, they will eventually become part of the own repository of the server where that particular *auidrome* is running.
+1. **Public**: The *tuits* are public in the *public/tuits.json* file and become *humans* in the *public/tuits* directory ([Iria](https://github.com/AuiDrome/auidrome_public_data/blob/master/auidrome/tuits/IRIA.json) for example) when someone *amadrinates* them. Ideally, they will eventually become part of the own repository of the server where that particular *auidrome* is running.
 
 2. People idendified that are currently members of the *pedalodrome* (and even members of the *restodrome*) can see **the protected data** of the user. That info will be stored in a different repository administrated by the collective interested in the project the people is *pedaling* for in the *pedalodrome* (examples of the protected data could be *the email* account or *company phone number* of the user).
 
