@@ -4,38 +4,37 @@
         <div class="cover-container">
           <section id="tuit">
             <article>
-                <img src="/images/<%= @human.auido %>.png" onerror="this.src = '/images/frijolito.png'" alt="<%= @human.auido %> avatar or default avatar" class="img-thumbnail icon"/>
                 <h1 id="auido">
                   <%= @human.auido %>
                 </h1>
-<% if @human.identities.any? %>
-                <span class="identities">
-                (<% @human.identities.each do |identity| %><span class="identity">@<%= identity %></span><% end %>)
-                </span>
-<% end %>
-                <div class="tuit-attributes">
+                <div class="tuit-properties">
                   <div>Created at
                     <span class="date" id="date"><%= @human.created_at %></span>
                   </div>
+<% if @human.identities.any? %>
+                  <div>
+                    <span class="madrinos">By <%= @human.identities.join(', ') %></span>
+                  </div>
+<% end %>
 
 <% if @human.madrinos.any? %>
-                  <div>Madrino<%= 's' if @human.madrinos.size > 1 %>
+                  <div>Announcer<%= 's' if @human.madrinos.size > 1 %>
                   <% @human.madrinos.each do |madrino| %><span class="madrinos">@<%= madrino %></span><% end %>
                   </div>
 <% end %>
 
-<% (@human.attributes - @human.core_attributes).each do |attr| %>
+<% (@human.properties - @human.core_properties).each do |property_name| %>
 <%# TODO(CRITICAL): PARSE THIS ATTR BEFORE DOING ANYTHING WITH IT!!!! %>
 <%# TODO: DO ALL THIS BETTER/WELL-DONE (add HAML?) %>
-<%   enum_value = @human.enumerable(attr) %>
+<%   enum_value = @human.enumerable(property_name) %>
                   <div>
-                    <%= attr %>
-                    <span class="<%= attr %>">
+                    <span class="property_name"><%= property_name %><%= 's' if enum_value.size > 1 %></span>
+                    <span class="property_value <%= property_name %>">
 <%   enum_value.each do |value| %>
                       <span>
 
-<%     if @human.linkable_attribute? attr %>
-                        <a href="<%= @human.hreferize attr %>"><%= value %></a>
+<%     if @human.hrefable_property? property_name, value %>
+                        <a href="<%= @human.href_for property_name, value %>"><%= value %></a>
 <%     else %>
                         <%= value %>
 <%     end %>
@@ -51,19 +50,25 @@
 
   <% unless %w{Auidrome Ripodrome}.include?(App.config.site_name) %>
               <form action="/admin/its-me/<%= @human.auido %>">
-                <button>It's me!</button>
+                <button>By me</button>
               </form>
   <% end %>
   <% unless @human.madrinos.include? current_user %>
               <form action="/admin/amadrinate/<%= @human.auido %>">
-                <button>Amadrinate</button>
+                <button>By other</button>
               </form>
   <% end %>
 
+<% end %>
+<% if current_user %>
+              <form id="property_form" action="/admin/property/<%= @human.auido %>" method="POST" >
+                <input id="property_name" type="text" name="property_name" value="" size="8" />
+                <input id="property_value" type="text" name="property_value" value="" />
+                <button>Push!</button>
+              </form>
 <% end %>
 
           </section>
         </div>
       </div>
     </div>
-

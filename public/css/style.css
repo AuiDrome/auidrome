@@ -104,7 +104,7 @@ article {
 article img {
   float: left;
 }
-.tuit-attributes {
+.tuit-properties {
   font-size: 14px;
   color: gray;
 }
@@ -170,9 +170,23 @@ section button {
   margin-left: auto;
 }
 
+#property_form {
+  color: black;
+  font-size: 20px;
+}
+
 /* Padding for spacing */
 .inner {
   padding: 30px;
+}
+
+.property_name {
+  display: block;
+  font-size: 22px;
+  text-decoration: underline;
+}
+.property_value span {
+  display: block;
 }
 
 @media (min-width: 768px) {
