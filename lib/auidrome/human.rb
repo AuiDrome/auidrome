@@ -1,6 +1,6 @@
 require 'json'
 module Auidrome
-  # A "human" is just a tuit with aditional attributes and a bit of magic :)
+  # A "human" is just a tuit with aditional properties and a bit of magic :)
   class Human
     def initialize auido, reader = nil
       @hash = Human.read_json(auido, reader)
@@ -12,7 +12,7 @@ module Auidrome
       @hash
     end
 
-    def attributes
+    def properties
       @hash.keys
     end
 
@@ -24,24 +24,34 @@ module Auidrome
       @hash[method.to_s] || super
     end
 
-    def core_attributes
-      Auidrome::CORE_ATTRIBUTES # no more, no less, by now...
+    def core_properties
+      Auidrome::CORE_PROPERTIES # no more, no less, by now...
     end
 
-    def linkable_attribute? attribute
-      Auidrome::HREF_ATTRIBUTES.include?(attribute.downcase) or @hash[attribute] =~ /^https?:\/\//
+    def self.linkable_property? property, value
+      Auidrome::HREF_PROPERTIES.include?(property.downcase) or value =~ /^https?:\/\//
     end
 
-    def hreferize method
-      if @hash[method] =~ /^http/
-        @hash[method]
+    def self.protocol_for property
+      Auidrome::PROTOCOLS[property.downcase] || 'http://'
+    end
+
+    def hrefable_property? property, value
+      Auidrome::Human.linkable_property? property,value
+    end
+
+    def href_for name, value
+      if value =~ /^https?:/
+        value
+      elsif drome = Auidrome::Config.drome_mapping_for_property(name)
+        "#{Auidrome::Human.protocol_for(name)}#{drome.base_domain}:#{drome.port_base}/tuits/#{value}"
       else
-        "http://#{@hash[method]}"
+        "#{Auidrome::Human.protocol_for(name)}#{value}"
       end
     end
 
-    def enumerable(attribute)
-      val = self.send(attribute)
+    def enumerable(property)
+      val = self.send(property)
       if val.is_a? Enumerable
         val
       else
@@ -82,6 +92,17 @@ module Auidrome
           )
         )
       )
+    end
+
+    def add_value! property, value
+      if @hash[property] and @hash[property].is_a?(Array)
+         @hash[property] << value
+      elsif @hash[property]
+         @hash[property] = [value]
+      else
+         @hash[property] = value
+      end
+      save_json!
     end
 
     def add_identity! user

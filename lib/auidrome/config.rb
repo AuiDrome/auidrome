@@ -22,5 +22,16 @@ module Auidrome
     def self.home_href
       @home_href ||= File.open('config/home_href').first.strip
     end
+
+    def self.drome_mapping_for_property name
+      # TODO: this method based on a config file (this code is provissional just to see it working)
+      if %w{doc talk spec}.include? name.downcase     
+        self.new('config/dromes/docudrome.yml')
+      elsif name.downcase == "tel."
+        nil
+      else
+        self.new('config/dromes/lovedrome.yml')
+      end
+    end
   end
 end

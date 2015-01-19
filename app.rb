@@ -2,6 +2,7 @@ require 'thin'
 require 'em-websocket'
 require 'sinatra/base'
 require 'rack-flash'
+require 'rack/session/cookie'
 require 'omniauth-twitter'
 require 'pry'
 require 'json'
@@ -10,9 +11,14 @@ require_relative 'lib/auidrome'
 EM.run do
   class App < Sinatra::Base
     set :bind, '0.0.0.0'
-    enable :sessions
-    use Rack::Flash
     use Rack::Logger
+    use Rack::Session::Cookie,
+      :key => 'rack.session',
+      :domain => 'otaony.com',
+      :path => '/',
+      :expire_after => 600, # In seconds
+      :secret => ENV['CONSUMER_SECRET']
+    use Rack::Flash
 
     def self.config
       @config ||= Auidrome::Config.new(ARGV[0])
@@ -51,7 +57,7 @@ EM.run do
     before do
       logger.info "Proccessing #{request.path_info}" unless file_request?
       pass unless request.path_info =~ /^\/admin/
-    
+
       # /auth/twitter is captured by omniauth:
       # when the path info matches /auth/twitter, omniauth will redirect to twitter
       unless current_user
@@ -147,6 +153,19 @@ EM.run do
         human.add_madrino! current_user 
         msg = "Now you are a madrino of <strong>" + auido + '</strong>. GREAT!!!'
       end
+      return_to 'tuits/' + auido, msg
+    end
+
+    post '/admin/property/:auido' do
+      auido = params['auido']
+      property_name = params['property_name'].upcase
+      human = Auidrome::Human.new(auido)
+      if human.properties.include? property_name
+        msg = '<span class="warning">One more value for ' + auido + "'s " + property_name
+      else
+        msg = 'Now we know something about ' + auido + "'s " + property_name
+      end
+      human.add_value! property_name, params['property_value']
       return_to 'tuits/' + auido, msg
     end
   end
