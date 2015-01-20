@@ -17,6 +17,8 @@
   </head>
 
   <body>
+<% if App.config.drome_of_humans? %>
+
     <script id="template_piado" type="x-tmpl-mustache">
       <div class="status">
         <img src="/images/{{auido}}.png" onerror="this.src = '/images/frijolito.png'" class="img-thumbnail icon"/>
@@ -34,11 +36,24 @@
     <script id="template_tuited" type="x-tmpl-mustache">
       <div class="status">
         <a href="/tuits/{{tuit}}"><img src="/images/{{tuit}}.png" onerror="this.src = '/images/frijolito.png'" alt="{{tuit}} avatar or default avatar" class="img-thumbnail icon"/></a>
-
         <p><%= App.config.tuit_sentence %></p>
         <p><%= App.config.tuit_consideration %> <%= remove_link %></p>
       </div>
     </script>
+
+<% else %>
+
+    <script id="template_piado" type="x-tmpl-mustache">
+        <p>somebody is thinking <strong>{{auido}}</strong> and has stored it LOCALLY</p>
+    </script>
+    <script id="template_piado_by_us" type="x-tmpl-mustache">
+        <p>you thought <strong>{{auido}}</strong> and stored that thought locally. <%= remove_link %></p>
+    </script>
+    <script id="template_tuited" type="x-tmpl-mustache">
+        <p>* <strong><a href="/tuits/{{tuit}}">{{tuit}}</strong></a> ({{at}})</p>
+    </script>
+
+<% end %>
     <div class="toolbar">
 <% if current_user %>
       You're <strong>@<%= current_user %></strong> in our...
