@@ -2,13 +2,13 @@
     <div class="site-wrapper">
       <div class="site-wrapper-inner">
         <div class="cover-container">
-          <section id="tuit">
+          <section id="tuit" class="<%= App.config.drome_of_humans? ? 'human' : 'other' %>">
             <article>
                 <img src="/images/<%= @human.auido %>.png" onerror="this.src = '/images/frijolito.png'" alt="<%= @human.auido %> avatar or default avatar" class="img-thumbnail icon"/>
                 <h1 id="auido">
                   <%= @human.auido %>
                 </h1>
-<% if @human.identities.any? %>
+<% if App.config.drome_of_humans? and @human.identities.any? %>
                 <span class="identities">
                 (<% @human.identities.each do |identity| %><span class="identity">@<%= identity %></span><% end %>)
                 </span>
@@ -19,7 +19,7 @@
                   </div>
 
 <% if @human.madrinos.any? %>
-                  <div>Announcer<%= 's' if @human.madrinos.size > 1 %>
+                  <div><%= App.config.drome_of_humans? ? 'Madrino' : 'Announcer' %><%= 's' if @human.madrinos.size > 1 %>
                   <% @human.madrinos.each do |madrino| %><span class="madrinos">@<%= madrino %></span><% end %>
                   </div>
 <% end %>

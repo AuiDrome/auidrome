@@ -15,6 +15,10 @@ module Auidrome
       end
     end
     
+    def drome_of_humans?
+      @yaml['port_base'] < 10001
+    end
+
     def self.base_domain
       @base_domain ||= File.open('config/base_domain').first.strip
     end

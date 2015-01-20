@@ -101,18 +101,21 @@ a.remove {
 article {
   margin-bottom:20px;
 }
-article img {
+section.human img {
   float: left;
+}
+section.other img {
+  display: none;
 }
 .tuit-properties {
   font-size: 14px;
   color: gray;
 }
-.tuit-attributes .date{
+.tuit-properties .date{
   font-size: 14px;
   color: #D3D3D3;
 }
-.tuit-attributes span {
+.tuit-properties span {
   display: block;
   font-size: 18px;
   color: white;
