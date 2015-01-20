@@ -4,18 +4,19 @@
         <div class="cover-container">
           <section id="tuit">
             <article>
+                <img src="/images/<%= @human.auido %>.png" onerror="this.src = '/images/frijolito.png'" alt="<%= @human.auido %> avatar or default avatar" class="img-thumbnail icon"/>
                 <h1 id="auido">
                   <%= @human.auido %>
                 </h1>
+<% if @human.identities.any? %>
+                <span class="identities">
+                (<% @human.identities.each do |identity| %><span class="identity">@<%= identity %></span><% end %>)
+                </span>
+<% end %>
                 <div class="tuit-properties">
                   <div>Created at
                     <span class="date" id="date"><%= @human.created_at %></span>
                   </div>
-<% if @human.identities.any? %>
-                  <div>
-                    <span class="madrinos">By <%= @human.identities.join(', ') %></span>
-                  </div>
-<% end %>
 
 <% if @human.madrinos.any? %>
                   <div>Announcer<%= 's' if @human.madrinos.size > 1 %>
