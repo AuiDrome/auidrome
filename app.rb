@@ -158,7 +158,7 @@ EM.run do
 
     post '/admin/property/:auido' do
       auido = params['auido']
-      property_name = params['property_name'].downcase
+      property_name = params['property_name'] # .downcase => nice, but not ready for latin chars yet (e.g. "vía")
       human = Auidrome::Human.new(auido)
       if human.properties.include? property_name
         msg = '<span class="warning">One more value for ' + auido + "'s " + property_name
