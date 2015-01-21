@@ -1,3 +1,4 @@
+# Copyright 2015 The Cocktail Experience
 require 'json'
 module Auidrome
   # A "human" is just a tuit with aditional properties and a bit of magic :)

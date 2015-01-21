@@ -1,3 +1,4 @@
+# Copyright 2015 The Cocktail Experience
 module Auidrome
   TUITS_FILE = 'public/tuits.json'
   PUBLIC_TUITS_DIR = 'public/tuits'

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright 2015 The Cocktail Experience
 source 'dromeslib.sh'
 
 if [ $# -eq 0 ]; then

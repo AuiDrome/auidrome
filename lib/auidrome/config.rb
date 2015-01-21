@@ -1,3 +1,4 @@
+# Copyright 2015 The Cocktail Experience
 require 'yaml'
 module Auidrome
   class Config
