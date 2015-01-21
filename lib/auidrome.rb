@@ -18,10 +18,13 @@ module Auidrome
     wikipedia
     featuring
     tel.
+    twitter
   }
-
   PROTOCOLS = {
     'tel.' => 'tel:'
+  }
+  PROPERTY_VALUE_TEMPLATES = {
+    twitter: "http://twitter.com/{{value}}"
   }
 
 end

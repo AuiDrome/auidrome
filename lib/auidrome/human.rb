@@ -43,6 +43,8 @@ module Auidrome
     def href_for name, value
       if value =~ /^https?:/
         value
+      elsif template = Auidrome::PROPERTY_VALUE_TEMPLATES[name.downcase.to_sym]
+        template.gsub('{{value}}', value)
       elsif drome = Auidrome::Config.drome_mapping_for_property(name)
         "#{Auidrome::Human.protocol_for(name)}#{drome.base_domain}:#{drome.port_base}/tuits/#{value}"
       else
