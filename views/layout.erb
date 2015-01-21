@@ -54,6 +54,21 @@
     </script>
 
 <% end %>
+    <div class="dromes-links">
+      <div class="dromes-links-inner">
+        <% [
+             %w{Auidrome Docudrome Eventodrome Thoughtsdrome},
+             %w{Petodrome Vegidrome}
+           ].each do |dromes| %>
+        <div>
+          <% dromes.map{|dromename| Auidrome::Config.new(dromename)}.each do |drome| %>
+          <a href="http://<%= drome.base_domain %>:<%= drome.port_base %>"><%= drome.site_name %></a>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
     <div class="toolbar">
 <% if current_user %>
       You're <strong>@<%= current_user %></strong> in our...
