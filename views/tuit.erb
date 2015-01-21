@@ -24,43 +24,46 @@
                   </div>
 <% end %>
 
+<%# Identity and trust/hope buttons :) %>
+<% unless (@human.madrinos + @human.identities).include? current_user %>
+  <% unless %w{Auidrome Ripodrome Fictiondrome}.include?(App.config.site_name) %>
+                  <form action="/admin/its-me/<%= @human.auido %>">
+                    <button><%= me_or_by_me_button_text %></button>
+                  </form>
+  <% end %>
+  <% unless @human.madrinos.include? current_user %>
+                  <form action="/admin/amadrinate/<%= @human.auido %>">
+                    <button><%= amadrinate_or_authorship_button_text %></button>
+                  </form>
+  <% end %>
+<% end %>
+
+<%# Properties %>
+                  <div class="other-properties clearfix">
 <% (@human.properties - @human.core_properties).each do |property_name| %>
 <%# TODO(CRITICAL): PARSE THIS ATTR BEFORE DOING ANYTHING WITH IT!!!! %>
 <%# TODO: DO ALL THIS BETTER/WELL-DONE (add HAML?) %>
 <%   enum_value = @human.enumerable(property_name) %>
-                  <div>
-                    <span class="property_name"><%= property_name %><%= 's' if enum_value.size > 1 %></span>
-                    <span class="property_value <%= property_name %>">
+                    <div>
+                      <span class="property_name"><%= property_name %><%= 's' if enum_value.size > 1 %></span>
+                      <span class="property_value <%= property_name %>">
 <%   enum_value.each do |value| %>
-                      <span>
+                        <span>
 
 <%     if @human.hrefable_property? property_name, value %>
-                        <a href="<%= @human.href_for property_name, value %>"><%= value %></a>
+                          <a href="<%= @human.href_for property_name, value %>"><%= value %></a>
 <%     else %>
-                        <%= value %>
+                          <%= value %>
 <%     end %>
-                      </span>
+                        </span>
 <%   end %>
-                    </span>
-                  </div>
+                      </span>
+                    </div>
 <% end %>
+                  </div>
                 </div>
             </article>
 
-<% unless (@human.madrinos + @human.identities).include? current_user %>
-
-  <% unless %w{Auidrome Ripodrome}.include?(App.config.site_name) %>
-              <form action="/admin/its-me/<%= @human.auido %>">
-                <button>By me</button>
-              </form>
-  <% end %>
-  <% unless @human.madrinos.include? current_user %>
-              <form action="/admin/amadrinate/<%= @human.auido %>">
-                <button>By other</button>
-              </form>
-  <% end %>
-
-<% end %>
 <% if current_user %>
               <form id="property_form" action="/admin/property/<%= @human.auido %>" method="POST" >
                 <input id="property_name" type="text" name="property_name" value="" size="8" />

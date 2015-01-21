@@ -1,3 +1,4 @@
+# Copyright 2015 The Cocktail Experience
 require 'thin'
 require 'em-websocket'
 require 'sinatra/base'
@@ -51,6 +52,13 @@ EM.run do
           App.config.site_name,
           @page_title || App.config.site_tagline
         ].join(': ')
+      end
+
+      def me_or_by_me_button_text
+        App.config.drome_of_humans? ? "It's me!" : "By me"
+      end
+      def amadrinate_or_authorship_button_text
+        App.config.drome_of_humans? ? "Amadrinate" : "By others"
       end
     end
 
