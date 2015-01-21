@@ -28,13 +28,31 @@ module Auidrome
     end
 
     def self.drome_mapping_for_property name
-      # TODO: this method based on a config file (this code is provissional just to see it working)
-      if %w{doc talk spec}.include? name.downcase     
-        self.new('config/dromes/docudrome.yml')
-      elsif name.downcase == "tel."
-        nil
+      drome_for_property(name.to_sym) if property_names_with_associated_drome.include?(name.to_sym)
+    end
+
+    def self.property_names_with_associated_drome
+      unless @properties_drome
+        @properties_drome = {}
+        drome_property_mappings_file.each {|drome, property_names|
+          property_names.split(',').map(&:to_sym).each {|prop|
+            @properties_drome[prop] = drome
+          }
+        }
+      end
+      @properties_drome.keys
+    end
+
+    protected
+    def self.drome_property_mappings_file
+      @drome_property_mappings_file ||= YAML.load_file('config/drome_property_mappings.yml')
+    end
+
+    def self.drome_for_property(name)
+      if @properties_drome[name].is_a? Auidrome::Config
+        @properties_drome[name]
       else
-        self.new('config/dromes/lovedrome.yml')
+        @properties_drome[name] = self.new("config/dromes/#{@properties_drome[name]}.yml")
       end
     end
   end
