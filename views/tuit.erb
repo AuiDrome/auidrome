@@ -4,7 +4,9 @@
         <div class="cover-container">
           <section id="tuit" class="<%= App.config.drome_of_humans? ? 'human' : 'other' %>">
             <article>
+<% if App.config.drome_of_humans? %>
                 <img src="/images/<%= @human.auido %>.png" onerror="this.src = '/images/frijolito.png'" alt="<%= @human.auido %> avatar or default avatar" class="img-thumbnail icon"/>
+<% end %>
                 <h1 id="auido">
                   <%= @human.auido %>
                 </h1>

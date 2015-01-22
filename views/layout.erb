@@ -115,19 +115,6 @@
 <% end %>
     </div>
 
-    <script>
-      var socket, host, wshost, template;
-      host = '<%= "http://#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT']}/" %>';
-      wshost = 'ws://<%="#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT'].to_i + 1}" %>';
-
-      // Metemos en alm. local los tuits recibidos desde el servidor
-      // (si alguien decidió guardarlo y nosotros sólo lo tenemos en
-      //  local el suyo prevalece).
-      var tuits_submitted = <%= @tuits_submitted %>;
-      for (var tuit in tuits_submitted){
-        localStorage.setItem(tuit, tuits_submitted[tuit]);
-      }
-    </script>
 
     <script src="/js/general.js"></script>
   </body>
