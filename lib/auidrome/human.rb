@@ -105,7 +105,7 @@ module Auidrome
       if @hash[property] and @hash[property].is_a?(Array)
          @hash[property] << value
       elsif @hash[property]
-         @hash[property] = [value]
+         @hash[property] = [@hash[property], value]
       else
          @hash[property] = value
       end
