@@ -19,11 +19,12 @@ module Auidrome
     wikipedia
     featuring
     tel.
-    twitter
   }
+  # Protocols to build HREFs ('http://' if omitted)
   PROTOCOLS = {
     'tel.' => 'tel:'
   }
+  # Templates to build HREFs
   PROPERTY_VALUE_TEMPLATES = {
     twitter: "http://twitter.com/{{value}}"
   }

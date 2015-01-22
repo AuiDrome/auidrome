@@ -31,8 +31,9 @@ module Auidrome
 
     def self.linkable_property? property, value
       Auidrome::HREF_PROPERTIES.include?(property) or
-        Auidrome::Config.property_names_with_associated_drome.include?(property.to_sym) or
-          value =~ /^https?:\/\//
+        Auidrome::PROPERTY_VALUE_TEMPLATES.include?(property) or
+          Auidrome::Config.property_names_with_associated_drome.include?(property.to_sym) or
+            value =~ /^https?:\/\//
     end
 
     def self.protocol_for property
