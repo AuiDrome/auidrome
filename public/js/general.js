@@ -99,6 +99,11 @@ $( document ).on("click", "a.remove", function(){
   return(false);
 });
 
+$('#property_name').addClass('lowercase');
+$('#property_form').submit(function(){
+  $('#property_name').val($(this).val().toLowerCase());
+});
+
 function initMoustache() {
   addMessage(" > initMoustache()");
   template_piado = $('#template_piado').html();
@@ -111,7 +116,9 @@ function initMoustache() {
 
 // TODO: some kind of order in all these JS stuff... :(
 $(function() {
-  connect();
-  $("#piido").focus();
+  if($("#piido").length == 1) {
+    connect();
+    piido.focus();
+  }
 });
 

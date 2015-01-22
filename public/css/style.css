@@ -56,6 +56,9 @@ body {
   font-family: 'Tangerine', serif;
   font-size: 22px;
 }
+.lowercase {
+  text-transform: lowercase;
+}
 
 footer a, footer a:focus, footer a:hover, a:active, a:visited {
   color: #fff;
