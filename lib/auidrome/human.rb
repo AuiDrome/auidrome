@@ -33,7 +33,7 @@ module Auidrome
       Auidrome::HREF_PROPERTIES.include?(property) or
         Auidrome::PROPERTY_VALUE_TEMPLATES.include?(property) or
           Auidrome::Config.property_names_with_associated_drome.include?(property.to_sym) or
-            value =~ /^https?:\/\//
+            value =~ /^https?:\/\//i
     end
 
     def self.protocol_for property
@@ -41,11 +41,12 @@ module Auidrome
     end
 
     def hrefable_property? property, value
-      Auidrome::Human.linkable_property? property, value
+      value =~ /^https?:/i or
+        Auidrome::Human.linkable_property? property, value
     end
 
     def href_for name, value
-      if value =~ /^https?:/
+      if value =~ /^https?:/i
         value
       elsif template = Auidrome::PROPERTY_VALUE_TEMPLATES[name.downcase.to_sym]
         template.gsub('{{value}}', value)
