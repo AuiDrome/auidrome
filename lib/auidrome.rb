@@ -9,8 +9,8 @@ module Auidrome
     web
     page
     blog
-    photos
-    videos
+    photo
+    video
     code
     sound
     media
