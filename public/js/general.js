@@ -101,7 +101,8 @@ $( document ).on("click", "a.remove", function(){
 
 $('#property_name').addClass('lowercase');
 $('#property_form').submit(function(){
-  $('#property_name').val($(this).val().toLowerCase());
+  var property_name = $('#property_name');
+  property_name.val(property_name.val().toLowerCase());
 });
 
 function initMoustache() {
