@@ -29,7 +29,7 @@ module Auidrome
     end
 
     def self.drome_mapping_for_property name
-      drome_for_property(name.to_sym) if property_names_with_associated_drome.include?(name.to_sym)
+      drome_for_property(name) if property_names_with_associated_drome.include?(name)
     end
 
     def self.property_names_with_associated_drome

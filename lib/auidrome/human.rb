@@ -31,7 +31,7 @@ module Auidrome
 
     def self.linkable_property? property, value
       Auidrome::HREF_PROPERTIES.include?(property) or
-        Auidrome::PROPERTY_VALUE_TEMPLATES.include?(property) or
+        Auidrome::PROPERTY_VALUE_TEMPLATES.include?(property.to_sym) or
           Auidrome::Config.property_names_with_associated_drome.include?(property.to_sym) or
             value =~ /^https?:\/\//i
     end
@@ -42,15 +42,16 @@ module Auidrome
 
     def hrefable_property? property, value
       value =~ /^https?:/i or
-        Auidrome::Human.linkable_property? property, value
+        Auidrome::Human.linkable_property? property.downcase, value
     end
 
     def href_for name, value
+      name_sym = name.downcase.to_sym
       if value =~ /^https?:/i
         value
-      elsif template = Auidrome::PROPERTY_VALUE_TEMPLATES[name.downcase.to_sym]
+      elsif template = Auidrome::PROPERTY_VALUE_TEMPLATES[name_sym]
         template.gsub('{{value}}', value)
-      elsif drome = Auidrome::Config.drome_mapping_for_property(name.downcase)
+      elsif drome = Auidrome::Config.drome_mapping_for_property(name_sym)
         "#{Auidrome::Human.protocol_for(name)}#{drome.base_domain}:#{drome.port_base}/tuits/#{value}"
       else
         "#{Auidrome::Human.protocol_for(name)}#{value}"
