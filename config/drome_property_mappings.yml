@@ -1,5 +1,5 @@
-lovedrome: author,speaker,featuring,vía,ponente
-docudrome: talk,doc,spec
+lovedrome: author,autor,speaker,featuring,vía,ponente,madre,padre,hermano,hermana,amiga,amigo
+docudrome: talk,doc,spec,codetail
 notedrome: note,reflexion,thought,monolog,dialog,triatlog,conversation
 eventodrome: event,evento,meet
 petodrome: animal,pet

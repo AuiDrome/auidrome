@@ -33,4 +33,5 @@ end
 require_relative 'auidrome/config.rb'
 require_relative 'auidrome/tuit.rb'
 require_relative 'auidrome/human.rb'
+require_relative 'auidrome/people.rb'
 require_relative 'auidrome/access_level.rb'

@@ -2,6 +2,8 @@
 require 'yaml'
 module Auidrome
   class Config
+    @@properties_drome, @@values_drome = {}, {}
+
     def initialize cfg_file=nil
       cfg_file ||= "config/dromes/auidrome.yml"
       cfg_file = "config/dromes/#{cfg_file.downcase}.yml" unless cfg_file =~ /^config.+yml$/
@@ -21,27 +23,29 @@ module Auidrome
     end
 
     def self.base_domain
-      @base_domain ||= File.open('config/base_domain').first.strip
+      @@base_domain ||= File.open('config/base_domain').first.strip
     end
 
     def self.home_href
-      @home_href ||= File.open('config/home_href').first.strip
+      @@home_href ||= File.open('config/home_href').first.strip
     end
 
-    def self.drome_mapping_for_property name
-      drome_for_property(name) if property_names_with_associated_drome.include?(name)
+    def self.drome_mapping_for name, value
+      if property_names_with_associated_drome.include?(name)
+        # "value" can refine the drome selection
+        drome_for_value(value.to_sym) || drome_for_property(name)
+      end
     end
 
     def self.property_names_with_associated_drome
-      unless @properties_drome
-        @properties_drome = {}
+      if @@properties_drome.empty?
         drome_property_mappings_file.each {|drome, property_names|
           property_names.split(',').map(&:to_sym).each {|prop|
-            @properties_drome[prop] = drome
+            @@properties_drome[prop] = drome
           }
         }
       end
-      @properties_drome.keys
+      @@properties_drome.keys
     end
 
     protected
@@ -50,11 +54,23 @@ module Auidrome
     end
 
     def self.drome_for_property(name)
-      if @properties_drome[name].is_a? Auidrome::Config
-        @properties_drome[name]
+      if @@properties_drome[name].is_a? Auidrome::Config
+        @@properties_drome[name]
       else
-        @properties_drome[name] = self.new("config/dromes/#{@properties_drome[name]}.yml")
+        @@properties_drome[name] = new_drome(@@properties_drome[name])
       end
+    end
+
+    def self.drome_for_value(value)
+      if @@values_drome[value].is_a? Auidrome::Config
+        @@values_drome[value]
+      elsif drome = People.drome_for(value.to_sym)
+        @@values_drome[value] = new_drome(drome)
+      end
+    end
+
+    def self.new_drome dromename
+      new("config/dromes/#{dromename}.yml")
     end
   end
 end
