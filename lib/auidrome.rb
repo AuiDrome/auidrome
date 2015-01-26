@@ -2,6 +2,7 @@
 module Auidrome
   TUITS_FILE = 'public/tuits.json'
   PUBLIC_TUITS_DIR = 'public/tuits'
+  PEDALERS_DIR = 'data/public/pedalodrome/tuits'
   PROTECTED_TUITS_DIR = 'data/protected/auidrome/tuits'
   PRIVATE_TUITS_DIR = 'data/private/auidrome/tuits'
   CORE_PROPERTIES = %w{created_at auido identities madrinos}
