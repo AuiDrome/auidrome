@@ -1,15 +1,29 @@
 # Copyright 2015 The Cocktail Experience
 require 'json'
 module Auidrome
-  # "auidos" in public/tuits.json commited on "human" dromes (with port number < 10000)
+  # "auidos" in committed public/tuits.json on "human" dromes (with port number < 10000)
   class People
     class << self
+      @@all = nil
+
       def all
-        @@all
+        # Order matters: the former more important
+        @@all ||= from_dromes \
+          :pedalodrome,
+          :byebyedrome,
+          :lovedrome,
+          :acadodrome,
+          :restodrome,
+          :auidrome,
+          :ripodrome,
+          :fictiondrome
       end
+
       def drome_for auido
-        @@all[auido.to_sym].first if @@all[auido.to_sym]
+        @@all[auido.to_sym].first if all[auido.to_sym]
       end
+
+    private
       def from_dromes *dromes
         {}.tap do |people|
           dromes.reverse.each do |drome|
@@ -20,18 +34,6 @@ module Auidrome
           end
         end
       end
-
     end
-
-    # Order matters: the former more important
-    @@all = from_dromes \
-      :pedalodrome,
-      :byebyedrome,
-      :lovedrome,
-      :acadodrome,
-      :restodrome,
-      :auidrome,
-      :ripodrome,
-      :fictiondrome
   end
 end
