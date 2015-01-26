@@ -22,6 +22,14 @@ module Auidrome
       @yaml['port_base'] < 10001
     end
 
+    def domain_and_port
+      Auidrome::Config.base_domain + ":" + @yaml['port_base'].to_s
+    end
+
+    def url
+      "http://#{domain_and_port}"
+    end
+
     def self.base_domain
       @@base_domain ||= File.open('config/base_domain').first.strip
     end
