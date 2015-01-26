@@ -3,7 +3,7 @@ require 'json'
 module Auidrome
   class AccessLevel
     def self.pedaler? identity
-      false # TODO: search into the Pedelodrome
+      !Auidrome::People.pedalers[identity.to_sym].nil?
     end
     def self.can_read_protected? reader, public_data
       pedaler?(reader) || public_data['madrinos'].include?(reader) rescue false
