@@ -52,7 +52,7 @@ module Auidrome
       elsif template = Auidrome::PROPERTY_VALUE_TEMPLATES[name_sym]
         template.gsub('{{value}}', value)
       elsif drome = Auidrome::Config.drome_mapping_for(name_sym, value)
-        "#{Auidrome::Human.protocol_for(name)}#{drome.base_domain}:#{drome.port_base}/tuits/#{value}"
+        "#{Auidrome::Human.protocol_for(name)}#{drome.domain_and_port}/tuits/#{value}"
       else
         "#{Auidrome::Human.protocol_for(name)}#{value}"
       end

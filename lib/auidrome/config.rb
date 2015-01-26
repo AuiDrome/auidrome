@@ -2,6 +2,7 @@
 require 'yaml'
 module Auidrome
   class Config
+    @@pedalodrome = nil
     @@properties_drome, @@values_drome = {}, {}
 
     def initialize cfg_file=nil
@@ -18,6 +19,10 @@ module Auidrome
       end
     end
     
+    def self.pedalodrome
+      @@pedalodrome ||= new_drome(:pedalodrome)
+    end
+
     def drome_of_humans?
       @yaml['port_base'] < 10001
     end
