@@ -5,7 +5,7 @@ module Auidrome
   PEDALERS_DIR = 'data/public/pedalodrome/tuits'
   PROTECTED_TUITS_DIR = 'data/protected/auidrome/tuits'
   PRIVATE_TUITS_DIR = 'data/private/auidrome/tuits'
-  CORE_PROPERTIES = %w{created_at auido identities madrinos}
+  CORE_PROPERTIES = %i(@id @context auido created_at identity madrino)
   HREF_PROPERTIES = %w{
     web
     page
@@ -33,6 +33,6 @@ module Auidrome
 end
 require_relative 'auidrome/config.rb'
 require_relative 'auidrome/tuit.rb'
-require_relative 'auidrome/human.rb'
+require_relative 'auidrome/drome.rb'
 require_relative 'auidrome/people.rb'
 require_relative 'auidrome/access_level.rb'

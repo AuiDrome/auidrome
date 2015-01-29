@@ -1,16 +1,21 @@
 # Copyright 2015 The Cocktail Experience
 require 'json'
 module Auidrome
-  # A "human" is just a tuit with aditional properties and a bit of magic :)
-  class Human
-    def initialize auido, reader = nil
-      @hash = Human.read_json(auido, reader)
-      @hash['identities'] ||= []
-      @hash['madrinos'] ||= []
+  class Drome
+    def initialize app
+      @app = app
+      @hash = {
+        identity: [],
+        madrino: []
+      }
     end
 
     def hash
       @hash
+    end
+
+    def conf
+      @app.config
     end
 
     def properties
@@ -22,7 +27,7 @@ module Auidrome
     end
 
     def method_missing(method, *args, &block)
-      @hash[method.to_s] || super
+      @hash[method.to_sym] || super
     end
 
     def core_properties
@@ -42,7 +47,7 @@ module Auidrome
 
     def hrefable_property? property, value
       value =~ /^https?:/i or
-        Auidrome::Human.linkable_property? property.downcase, value
+        Drome.linkable_property? property.downcase, value
     end
 
     def href_for name, value
@@ -52,9 +57,9 @@ module Auidrome
       elsif template = Auidrome::PROPERTY_VALUE_TEMPLATES[name_sym]
         template.gsub('{{value}}', value)
       elsif drome = Auidrome::Config.drome_mapping_for(name_sym, value)
-        "#{Auidrome::Human.protocol_for(name)}#{drome.domain_and_port}/tuits/#{value}"
+        "#{Drome.protocol_for(name)}#{drome.domain_and_port}/tuits/#{value}"
       else
-        "#{Auidrome::Human.protocol_for(name)}#{value}"
+        "#{Drome.protocol_for(name)}#{value}"
       end
     end
 
@@ -68,19 +73,21 @@ module Auidrome
     end
 
     def save_json!
-      File.open(PUBLIC_TUITS_DIR + "/#{@hash['auido']}.json","w") do |f|
-        f.write(hash.to_json)
-      end 
+      @app.save_json! basic_jsonld_for(@hash[:auido]).merge(@hash)
     end
 
-    def self.store_json hash
-      File.open(PUBLIC_TUITS_DIR + "/#{hash['auido']}.json","w") do |f|
-        f.write(hash.to_json)
-      end 
+    def basic_data_for auido
+      Tuit.read_from_index_file(auido).merge @hash
     end
 
-    def self.read_json auido, reader = nil
-      tuit_data = Tuit.read_from_index_file(auido)
+    def basic_jsonld_for auido
+      {
+        '@context' => conf.url + "/json-context.json",
+        '@id' => conf.url + "/tuits/#{auido}"
+      }.merge(basic_data_for(auido))
+    end
+
+    def load_json auido, reader = nil
       public_data = Tuit.read_json("#{PUBLIC_TUITS_DIR}/#{auido}.json")
       protected_data = if Auidrome::AccessLevel.can_read_protected?(reader, public_data)
         Tuit.read_json("#{PROTECTED_TUITS_DIR}/#{auido}.json")
@@ -92,14 +99,8 @@ module Auidrome
       else
         {}
       end
-
-      private_data.merge(
-        protected_data.merge(
-          public_data.merge(
-            tuit_data
-          )
-        )
-      )
+      @hash = basic_data_for(auido).merge(public_data.merge(protected_data.merge(private_data)))
+      self
     end
 
     def add_value! property, value
@@ -114,19 +115,13 @@ module Auidrome
     end
 
     def add_identity! user
-      @hash['identities'] << user unless @hash['identities'].include? user
+      @hash[:identity] << user unless @hash[:identity].include? user
       save_json!
     end
 
     def add_madrino! user
-      @hash['madrinos'] << user unless @hash['madrinos'].include? user
+      @hash[:madrino] << user unless @hash[:madrino].include? user
       save_json!
-    end
-
-    def self.add_madrino! auido, user
-      human = Auidrome::Human.new(auido, user)
-      human.hash['madrinos'] << user unless human.madrinos.include? user
-      Auidrome::Human.store_json human.hash
     end
   end
 end

@@ -11,22 +11,42 @@ require_relative 'lib/auidrome'
 
 EM.run do
   class App < Sinatra::Base
+    include Auidrome
     set :bind, '0.0.0.0'
     use Rack::Logger
     use Rack::Session::Cookie,
       :key => 'rack.session',
       :domain => 'otaony.com',
       :path => '/',
-      :expire_after => 600, # In seconds
+      :expire_after => 3600, # In seconds
       :secret => ENV['CONSUMER_SECRET']
     use Rack::Flash
 
     def self.config
-      @config ||= Auidrome::Config.new(ARGV[0])
+      @@config ||= Auidrome::Config.new(ARGV[0])
+    end
+
+    def self.save_json! hash
+      File.open(PUBLIC_TUITS_DIR + "/#{hash[:auido]}.json","w") do |f|
+        if config.pretty_json?
+          f.write JSON.pretty_generate(hash)
+        else
+          f.write hash.to_json
+        end
+      end
+    end
+
+    def drome
+      @drome ||= Auidrome::Drome.new(App)
     end
 
 
     configure do
+      if App.config.pretty_json?
+        puts "Generating pretty JSON."
+      end
+
+      puts "Using ENV['CONSUMER_KEY'] and ENV['CONSUMER_SECRET'] for Twitter auth."
       use OmniAuth::Builder do
         provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
       end
@@ -38,9 +58,10 @@ EM.run do
       end
 
       def current_user
-        # current user name for the auth provider
-        #   e.g. session['twitter'] => colgado
-        session[:provider] && session[session[:provider]]
+        # e.g. "twitter/colgado" or "github/nando" (or nil)
+        if session[:provider] && session[session[:provider]]
+          "#{session[:provider]}/#{session[session[:provider]]}"
+        end
       end
 
       def file_request?
@@ -57,8 +78,13 @@ EM.run do
       def me_or_by_me_button_text
         App.config.drome_of_humans? ? "It's me!" : "By me"
       end
+
       def amadrinate_or_authorship_button_text
         App.config.drome_of_humans? ? "Amadrinate" : "By others"
+      end
+
+      def pretty?
+        App.config.pretty_json? || params[:pretty]
       end
     end
 
@@ -111,8 +137,8 @@ EM.run do
         Auidrome::Tuit.store_these current_tuits
       end
 
-      if current_user # piído + madrino = human!!!
-        Auidrome::Human.add_madrino! piido, current_user
+      if current_user # piído + madrino = (it used to mean) human!!!
+        Auidrome::Drome.add_madrino! piido, current_user
         if amadrinated_at
           msg = 'Great, at last <strong>'+piido+'</strong> is here and amadrinated <strong>by you</strong>. Thanks!'
         else
@@ -130,9 +156,38 @@ EM.run do
       end
     end
 
+    get "/tuits/:auido.json" do
+      content_type :'application/json'
+      tuit = drome.basic_jsonld_for(params[:auido])
+      App.save_json! tuit # if we're here file is not there
+      if pretty?
+        JSON.pretty_generate tuit
+      else
+        tuit.to_json
+      end
+    end
+
+    get '/json-context.json' do
+      content_type :'application/json'
+      @ports = {}
+      @properties = Auidrome::Config.properties_with_drome.inject({}) do |h, (k,v)|
+        @ports[v.site_name] ||= v.port_base
+        h[k] = v.site_name;
+        h
+      end
+
+      yml = YAML.load_file('config/json_context.json.yml')
+      yml['auido'].gsub! '{{site_name}}', App.config.site_name
+      yml['auido'].gsub! '{{item_description}}', App.config.item_description
+      yml['dromes_ports'] = @ports
+      yml['property_mappings'] = @properties
+
+      pretty? ? JSON.pretty_generate(yml) : yml
+    end
+
     get "/tuits/:auido" do
       @page_title = params[:auido]
-      @human = Auidrome::Human.new(params[:auido], current_user)
+      @human = drome.load_json(params[:auido], current_user)
       erb :tuit
     end
 
@@ -142,8 +197,8 @@ EM.run do
 
     get "/admin/its-me/:auido" do
       auido = params['auido']
-      human = Auidrome::Human.new(auido)
-      if human.identities.include? current_user
+      human = Auidrome::Drome.new(auido)
+      if human.indentity.include? current_user
         msg = '<span class="warning">Yes, you definitely are <strong>' + auido + '</strong> :)</span>.'
       else
         human.add_identity! current_user 
@@ -154,8 +209,8 @@ EM.run do
 
     get "/admin/amadrinate/:auido" do
       auido = params['auido']
-      human = Auidrome::Human.new(auido)
-      if human.madrinos.include? current_user
+      human = drome.load_json(auido)
+      if human.madrino.include? current_user
         msg = '<span class="warning">You already was madrino of <strong>' + auido + '</strong></span>.'
       else
         human.add_madrino! current_user 
@@ -167,7 +222,7 @@ EM.run do
     post '/admin/property/:auido' do
       auido = params['auido']
       property_name = params['property_name'] # .downcase => nice, but not ready for latin chars yet (e.g. "vía")
-      human = Auidrome::Human.new(auido)
+      human = Auidrome::Drome.new(auido)
       if human.properties.include? property_name
         msg = '<span class="warning">One more value for ' + auido + "'s " + property_name
       else

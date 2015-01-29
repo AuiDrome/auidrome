@@ -2,8 +2,7 @@
 require 'yaml'
 module Auidrome
   class Config
-    @@pedalodrome = nil
-    @@properties_drome, @@values_drome = {}, {}
+    @@dromes, @@properties_drome, @@values_drome = {}, {}, {}
 
     def initialize cfg_file=nil
       cfg_file ||= "config/dromes/auidrome.yml"
@@ -18,13 +17,17 @@ module Auidrome
         @yaml[method.to_s] || super
       end
     end
-    
+
     def self.pedalodrome
-      @@pedalodrome ||= new_drome(:pedalodrome)
+      load_drome(:pedalodrome)
     end
 
     def drome_of_humans?
       @yaml['port_base'] < 10001
+    end
+
+    def pretty_json?
+      File.exists? 'config/generate_pretty_json'
     end
 
     def domain_and_port
@@ -50,6 +53,13 @@ module Auidrome
       end
     end
 
+    def self.properties_with_drome
+      property_names_with_associated_drome.each do |property|
+        drome_for_property property
+      end
+      @@properties_drome
+    end
+
     def self.property_names_with_associated_drome
       if @@properties_drome.empty?
         drome_property_mappings_file.each {|drome, property_names|
@@ -61,29 +71,29 @@ module Auidrome
       @@properties_drome.keys
     end
 
-    protected
-    def self.drome_property_mappings_file
-      @drome_property_mappings_file ||= YAML.load_file('config/drome_property_mappings.yml')
-    end
-
     def self.drome_for_property(name)
       if @@properties_drome[name].is_a? Auidrome::Config
         @@properties_drome[name]
       else
-        @@properties_drome[name] = new_drome(@@properties_drome[name])
+        @@properties_drome[name] = load_drome(@@properties_drome[name])
       end
+    end
+
+    protected
+    def self.drome_property_mappings_file
+      @drome_property_mappings_file ||= YAML.load_file('config/drome_property_mappings.yml')
     end
 
     def self.drome_for_value(value)
       if @@values_drome[value].is_a? Auidrome::Config
         @@values_drome[value]
       elsif drome = People.drome_for(value.to_sym)
-        @@values_drome[value] = new_drome(drome)
+        @@values_drome[value] = load_drome(drome)
       end
     end
 
-    def self.new_drome dromename
-      new("config/dromes/#{dromename}.yml")
+    def self.load_drome dromename
+      @@dromes[dromename.to_sym] ||= new("config/dromes/#{dromename}.yml")
     end
   end
 end

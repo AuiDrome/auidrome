@@ -10,9 +10,9 @@
                 <h1 id="auido">
                   <%= @human.auido %>
                 </h1>
-<% if App.config.drome_of_humans? and @human.identities.any? %>
+<% if App.config.drome_of_humans? and @human.identity.any? %>
                 <span class="identities">
-                (<% @human.identities.each do |identity| %><span class="identity">@<%= identity %></span> <% end %>)
+                (<% @human.identity.each do |identity| %><span class="identity">@<%= identity %></span> <% end %>)
                 </span>
 <% end %>
                 <div class="tuit-properties">
@@ -20,14 +20,14 @@
                     <span class="date" id="date"><%= @human.created_at %></span>
                   </div>
 
-<% if @human.madrinos.any? %>
-                  <div><%= App.config.drome_of_humans? ? 'Madrino' : 'Announcer' %><%= 's' if @human.madrinos.size > 1 %>
-                  <% @human.madrinos.each do |madrino| %>
-                    <span class="madrinos">
+<% if @human.madrino.any? %>
+                  <div><%= App.config.drome_of_humans? ? 'Madrino' : 'Announcer' %><%= 's' if @human.madrino.size > 1 %>
+                  <% @human.madrino.each do |madrino| %>
+                    <span class="madrino">
                   <%   if pedaler = Auidrome::People.pedalers[madrino.to_sym] %>
                          <a href="<%= Auidrome::Config.pedalodrome.url %>/tuits/<%= pedaler %>"><%= pedaler %></a>
                   <%   else %>
-                         @<%= madrino %>
+                         <%= madrino %>
                   <%   end %>
                     </span>
                   <% end %>
@@ -35,13 +35,13 @@
 <% end %>
 
 <%# Identity and trust/hope buttons :) %>
-<% unless (@human.madrinos + @human.identities).include? current_user %>
+<% unless (@human.madrino + @human.identity).include? current_user %>
   <% unless %w{Auidrome Ripodrome Fictiondrome}.include?(App.config.site_name) %>
                   <form action="/admin/its-me/<%= @human.auido %>">
                     <button><%= me_or_by_me_button_text %></button>
                   </form>
   <% end %>
-  <% unless @human.madrinos.include? current_user %>
+  <% unless @human.madrino.include? current_user %>
                   <form action="/admin/amadrinate/<%= @human.auido %>">
                     <button><%= amadrinate_or_authorship_button_text %></button>
                   </form>

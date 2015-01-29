@@ -14,7 +14,7 @@ module Auidrome
       #    :olalla => [:acadodrome, :auidrome]
       #  }
       def all
-        # Order matters: the former more important
+        # Order matters: the former more important when calling #drome_for
         @@all ||= from_dromes \
           :byebyedrome,
           :pedalodrome,
@@ -38,7 +38,7 @@ module Auidrome
         if @@pedalers.empty?
           Dir.glob("#{PEDALERS_DIR}/*.json") do |path|
             auido = File.basename(path, '.json')
-            identities = JSON.parse(File.read(path))['identities'] || []
+            identities = JSON.parse(File.read(path))['identity'] || []
             identities.each do |identity|
               @@pedalers[identity.to_sym] = auido.to_sym
             end
