@@ -31,19 +31,11 @@ module Auidrome
     end
 
     def domain_and_port
-      Auidrome::Config.base_domain + ":" + @yaml['port_base'].to_s
+      App.settings.base_domain + ":" + @yaml['port_base'].to_s
     end
 
     def url
       "http://#{domain_and_port}"
-    end
-
-    def self.base_domain
-      @@base_domain ||= File.open('config/base_domain').first.strip
-    end
-
-    def self.home_href
-      @@home_href ||= File.open('config/home_href').first.strip
     end
 
     def self.drome_mapping_for name, value

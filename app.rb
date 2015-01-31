@@ -40,6 +40,13 @@ EM.run do
       @drome ||= Auidrome::Drome.new(App)
     end
 
+    configure :production do
+      set :base_domain, 'otaony.com'
+    end
+
+    configure :development do
+      set :base_domain, 'localhost'
+    end
 
     configure do
       if App.config.pretty_json?
