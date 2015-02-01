@@ -11,6 +11,6 @@ fi
 for drome in $DROME_NAMES; do
   echo 
   echo "Press [Enter] key to start $drome screen..."
-  read -p "screen $option $drome"
-  screen $option $drome
+  run_command "cd ../$drome"
+  ask_and_run "screen $option $drome"
 done
