@@ -16,7 +16,7 @@ EM.run do
     use Rack::Logger
     use Rack::Session::Cookie,
       :key => 'rack.session',
-      :domain => 'otaony.com',
+      :domain => ENV['AUIDROME_DOMAIN'] || 'localhost',
       :path => '/',
       :expire_after => 3600, # In seconds
       :secret => ENV['CONSUMER_SECRET']
@@ -92,6 +92,16 @@ EM.run do
 
       def pretty?
         App.config.pretty_json? || params[:pretty]
+      end
+
+      def get_property_name_from_referrer 
+      # TODO: From the port number, vía config yml's, the dromename & from
+      #   the config/drome_property_mappings.yml get the possible names.
+        $1 if request.referrer and request.referrer =~ /:(\d+)/
+      end
+
+      def get_value_from_referrer 
+        CGI.unescape($1) if request.referrer and request.referrer =~ /\/([^\/]+)$/
       end
     end
 
@@ -204,12 +214,13 @@ EM.run do
 
     get "/admin/its-me/:auido" do
       auido = params['auido']
-      human = Auidrome::Drome.new(auido)
+      human = Auidrome::Drome.new(App)
+      human.load_json auido
       if human.indentity.include? current_user
-        msg = '<span class="warning">Yes, you definitely are <strong>' + auido + '</strong> :)</span>.'
+        msg = '<span class="warning">Yes, we already knew that! :)</span>.'
       else
         human.add_identity! current_user 
-        msg = "Added <strong>#{current_user}</strong> as identity of <strong>" + auido + '</strong>.'
+        msg = "Added <strong>#{current_user}</strong> as identity/author of <strong>" + auido + '</strong>.'
       end
       return_to 'tuits/' + auido, msg
     end
@@ -228,8 +239,9 @@ EM.run do
 
     post '/admin/property/:auido' do
       auido = params['auido']
-      property_name = params['property_name'] # .downcase => nice, but not ready for latin chars yet (e.g. "vía")
-      human = Auidrome::Drome.new(auido)
+      property_name = params['property_name'] #.downcase'd be nice, but not ready for latin chars yet (e.g. "vía")
+      human = Auidrome::Drome.new(App)
+      human.load_json auido
       if human.properties.include? property_name
         msg = '<span class="warning">One more value for ' + auido + "'s " + property_name
       else

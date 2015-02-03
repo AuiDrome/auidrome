@@ -76,12 +76,11 @@
 
 <% if current_user %>
               <form id="property_form" action="/admin/property/<%= @human.auido %>" method="POST" >
-                <input id="property_name" type="text" name="property_name" value="" size="8" />
-                <input id="property_value" type="text" name="property_value" value="" />
+                <input id="property_name" type="text" name="property_name" value="<%= get_property_name_from_referrer %>" size="8" />
+                <input id="property_value" type="text" name="property_value" value="<%= get_value_from_referrer %>" />
                 <button>Push!</button>
               </form>
 <% end %>
-
           </section>
         </div>
       </div>
