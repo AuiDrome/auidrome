@@ -63,6 +63,26 @@ module Auidrome
       end
     end
 
+    def image_src
+      if @hash[:auido] and image_file?
+        @image_file
+      else
+        "/images/frijolito.png"
+      end
+    end
+
+    def image_href
+      if better_image?
+        "/tuits/better/#{@hash[:auido]}"
+      else
+        "/tuits/#{@hash[:auido]}"
+      end
+    end
+
+    def better_image?
+      !(image_of_quality(image_quality+1)).nil?
+    end
+
     def enumerable(property)
       val = self.send(property)
       if val.is_a? Enumerable
@@ -87,7 +107,12 @@ module Auidrome
       }.merge(basic_data_for(auido))
     end
 
-    def load_json auido, reader = nil
+    def image_quality
+      @quality ||= 0
+    end   
+
+    def load_json auido, reader = nil, quality = 0
+      @quality = quality # Currently only for image quality ("better" subdir levels)
       public_data = Tuit.read_json("#{PUBLIC_TUITS_DIR}/#{auido}.json")
       protected_data = if Auidrome::AccessLevel.can_read_protected?(reader, public_data)
         Tuit.read_json("#{PROTECTED_TUITS_DIR}/#{auido}.json")
@@ -123,5 +148,23 @@ module Auidrome
       @hash[:madrino] << user unless @hash[:madrino].include? user
       save_json!
     end
+
+
+    private
+    def image_file?
+      @image_file = image_of_quality(image_quality) unless @image_file
+      !@image_file.nil?
+    end
+
+    def image_of_quality quality
+      prefix = quality > 0 ? "#{(['better']*quality).join('/')}/" : ""
+      basepath = "/images/#{prefix}" + @hash[:auido] 
+      %w{jpg png gif jpeg}.each do |extension|
+        filepath = "#{basepath}.#{extension}"
+        return filepath if File.exists?("public" + filepath)
+      end
+      return nil
+    end
+
   end
 end

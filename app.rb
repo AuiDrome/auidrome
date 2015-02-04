@@ -202,9 +202,15 @@ EM.run do
       pretty? ? JSON.pretty_generate(yml) : yml
     end
 
+    get "/tuits/better/:auido" do
+      @page_title = params[:auido]
+      @drome_entry = drome.load_json(params[:auido], current_user, 1) # depth => 1
+      erb :tuit
+    end
+
     get "/tuits/:auido" do
       @page_title = params[:auido]
-      @human = drome.load_json(params[:auido], current_user)
+      @drome_entry = drome.load_json(params[:auido], current_user) # depth => 0
       erb :tuit
     end
 
@@ -214,12 +220,12 @@ EM.run do
 
     get "/admin/its-me/:auido" do
       auido = params['auido']
-      human = Auidrome::Drome.new(App)
-      human.load_json auido
-      if human.indentity.include? current_user
+      entry = Auidrome::Drome.new(App)
+      entry.load_json auido
+      if entry.indentity.include? current_user
         msg = '<span class="warning">Yes, we already knew that! :)</span>.'
       else
-        human.add_identity! current_user 
+        entry.add_identity! current_user 
         msg = "Added <strong>#{current_user}</strong> as identity/author of <strong>" + auido + '</strong>.'
       end
       return_to 'tuits/' + auido, msg
@@ -227,11 +233,11 @@ EM.run do
 
     get "/admin/amadrinate/:auido" do
       auido = params['auido']
-      human = drome.load_json(auido)
-      if human.madrino.include? current_user
+      entry = drome.load_json(auido)
+      if entry.madrino.include? current_user
         msg = '<span class="warning">You already was madrino of <strong>' + auido + '</strong></span>.'
       else
-        human.add_madrino! current_user 
+        entry.add_madrino! current_user 
         msg = "Now you are a madrino of <strong>" + auido + '</strong>. GREAT!!!'
       end
       return_to 'tuits/' + auido, msg
@@ -240,14 +246,14 @@ EM.run do
     post '/admin/property/:auido' do
       auido = params['auido']
       property_name = params['property_name'] #.downcase'd be nice, but not ready for latin chars yet (e.g. "vía")
-      human = Auidrome::Drome.new(App)
-      human.load_json auido
-      if human.properties.include? property_name
+      entry = Auidrome::Drome.new(App)
+      entry.load_json auido
+      if entry.properties.include? property_name
         msg = '<span class="warning">One more value for ' + auido + "'s " + property_name
       else
         msg = 'Now we know something about ' + auido + "'s " + property_name
       end
-      human.add_value! property_name, params['property_value']
+      entry.add_value! property_name, params['property_value']
       return_to 'tuits/' + auido, msg
     end
   end
