@@ -2,7 +2,7 @@
 
 ![Pair of Huia](https://upload.wikimedia.org/wikipedia/commons/0/00/Huia_Buller.jpg)
 
-**Aui**: onomatopoeic fragment of the extinct Huia voice (trying to catch its "where-are-you" sound [0]).
+**Aui**: onomatopoeic fragment of the extinct Huia voice (trying to catch its "where-you-are" sound [0]).
 
 **Drome**: a place where people can get in, and from some of them people can also get out.
 
