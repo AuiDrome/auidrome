@@ -41,7 +41,11 @@ EM.run do
     end
 
     configure :production do
-      set :base_domain, 'otaony.com'
+      if ENV['AUIDROME_DOMAIN']
+        set(:base_domain, ENV['AUIDROME_DOMAIN'])
+      else
+        raise "ENV[AUIDROME_DOMAIN] must be set in production"
+      end
     end
 
     configure :development do
@@ -49,6 +53,7 @@ EM.run do
     end
 
     configure do
+      puts "AUIDROME: listening with #{App.config.site_name} in #{App.config.url}"
       if App.config.pretty_json?
         puts "Generating pretty JSON."
       end
