@@ -6,7 +6,7 @@ module Auidrome
   PROTECTED_TUITS_DIR = 'data/protected/auidrome/tuits'
   PRIVATE_TUITS_DIR = 'data/private/auidrome/tuits'
   CORE_PROPERTIES = %i(@id @context auido created_at identity madrino)
-  HREF_PROPERTIES = %w{
+  HREF_PROPERTIES = %i{
     web
     page
     blog
@@ -23,7 +23,7 @@ module Auidrome
   }
   # Protocols to build HREFs ('http://' if omitted)
   PROTOCOLS = {
-    'tel.' => 'tel:'
+    :'tel.' => 'tel:'
   }
   # Templates to build HREFs
   PROPERTY_VALUE_TEMPLATES = {
