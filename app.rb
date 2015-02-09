@@ -23,7 +23,7 @@ EM.run do
     use Rack::Flash
 
     def self.config
-      @@config ||= Auidrome::Config.new(ARGV[0])
+      @@config ||= Config.new(ARGV[0])
     end
 
     def self.save_json! hash
@@ -37,7 +37,7 @@ EM.run do
     end
 
     def drome
-      @drome ||= Auidrome::Drome.new(App)
+      @drome ||= Drome.new(App)
     end
 
     configure :production do
@@ -141,14 +141,14 @@ EM.run do
     end
 
     get "/" do
-      @tuits_submitted = Auidrome::Tuit.current_stored_tuits.invert.to_json
+      @tuits_submitted = Tuit.current_stored_tuits.invert.to_json
       erb :index
     end
 
     post "/tuits" do
       piido = params[:piido]
       puts (current_user || 'Somebody') + " has shouted: ¡¡¡#{piido}!!!"
-      current_tuits = Auidrome::Tuit.current_stored_tuits
+      current_tuits = Tuit.current_stored_tuits
       if current_tuits[piido] 
         # The piído is in our tuits.json but we still don't know anything about madrinos.
         amadrinated_at = nil
@@ -156,11 +156,11 @@ EM.run do
         # We assume current_user exist, so the piido will be "amadrinated" right now.
         amadrinated_at = Time.now.utc
         current_tuits[piido] = amadrinated_at
-        Auidrome::Tuit.store_these current_tuits
+        Tuit.store_these current_tuits
       end
 
       if current_user # piído + madrino = (it used to mean) human!!!
-        Auidrome::Drome.add_madrino! piido, current_user
+        Drome.add_madrino! piido, current_user
         if amadrinated_at
           msg = 'Great, at last <strong>'+piido+'</strong> is here and amadrinated <strong>by you</strong>. Thanks!'
         else
@@ -192,7 +192,7 @@ EM.run do
     get '/json-context.json' do
       content_type :'application/json'
       @ports = {}
-      @properties = Auidrome::Config.properties_with_drome.inject({}) do |h, (k,v)|
+      @properties = Config.properties_with_drome.inject({}) do |h, (k,v)|
         @ports[v.site_name] ||= v.port_base
         h[k] = v.site_name;
         h
@@ -225,7 +225,7 @@ EM.run do
 
     get "/admin/its-me/:auido" do
       auido = params['auido']
-      entry = Auidrome::Drome.new(App)
+      entry = Drome.new(App)
       entry.load_json auido
       if entry.indentity.include? current_user
         msg = '<span class="warning">Yes, we already knew that! :)</span>.'
@@ -250,8 +250,13 @@ EM.run do
 
     post '/admin/property/:auido' do
       auido = params['auido']
+      unless Tuit.tuit_stored?(auido) # Right now then!
+        current_tuits = Tuit.current_stored_tuits
+        current_tuits[auido] = Time.now.utc
+        Tuit.store_these current_tuits
+      end
       property_name = params['property_name'] #.downcase'd be nice, but not ready for latin chars yet (e.g. "vía")
-      entry = Auidrome::Drome.new(App)
+      entry = Drome.new(App)
       entry.load_json auido
       if entry.properties.include? property_name
         msg = '<span class="warning">One more value for ' + auido + "'s " + property_name
