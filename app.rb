@@ -164,23 +164,13 @@ EM.run do
         Tuit.store_these current_tuits
       end
 
-      if current_user # piído + madrino = (it used to mean) human!!!
-        Drome.add_madrino! piido, current_user
-        if amadrinated_at
-          msg = 'Great, at last <strong>'+piido+'</strong> is here and amadrinated <strong>by you</strong>. Thanks!'
-        else
-          msg = "We've added you as madrino of <strong>"+piido+"</strong>, thanks!"
-        end
-        return_to 'tuits/' + piido, msg
+      piido_link = %@<a href="/tuits/#{piido}">#{piido}</a>@
+      if amadrinated_at
+        msg = piido_link + ' is now between us!'
       else
-        piido_link = %@<a href="/tuits/#{piido}">#{piido}</a>@
-        if amadrinated_at
-          msg = piido_link + ' is now between us, but <strong>WITH NO MADRINOS</strong> :(...'
-        else
-          msg = 'We already knew '+piido_link+". Notice you're NOT currently logged."
-        end
-        return_to '/', '<span class="warning">'+msg+'</span>'
+        msg = 'We already knew '+piido_link+", thanks!"
       end
+      return_to '/', msg
     end
 
     get "/tuits/:auido.json" do
