@@ -1,4 +1,9 @@
+drome_name:
+drome_item_name:
+drome_item_description:
 created_at: Moment when the *auido* was first submitted.
-auido: The word we use to remember about this entry. In this drome ({{site_name}}) is a {{item_description}}
-identity: Ownership/s of the entry.
-madrino: Indentity/ies of people that think this entry is interesting.
+auido: Like 'name', just a word or short phrase that we have chosen to remember this entry (whose nature depends on the Drome where its located).
+identity: Digital itentity/ies of the owner/s of what this entry represents.
+madrino: Indentity/ies of people that think this entry is interesting (and that could know more things about it).
+dromes_ports:
+property_mappings:

@@ -199,11 +199,11 @@ EM.run do
       end
 
       yml = YAML.load_file('config/json_context.json.yml')
-      yml['auido'].gsub! '{{site_name}}', App.config.site_name
-      yml['auido'].gsub! '{{item_description}}', App.config.item_description
+      yml['drome_name'] = App.config.site_name
+      yml['drome_item_name'] = App.config.item_name
+      yml['drome_item_description'] = App.config.item_description
       yml['dromes_ports'] = @ports
       yml['property_mappings'] = @properties
-
       pretty? ? JSON.pretty_generate(yml) : yml
     end
 
