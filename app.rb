@@ -108,6 +108,11 @@ EM.run do
       def get_value_from_referrer 
         CGI.unescape($1) if request.referrer and request.referrer =~ /\/([^\/]+)$/
       end
+
+      def warning_span text
+        '<span class="warning">' + text + '</span>'
+      end
+      
     end
 
     before do
@@ -255,13 +260,13 @@ EM.run do
         current_tuits[auido] = Time.now.utc
         Tuit.store_these current_tuits
       end
-      property_name = params['property_name'] #.downcase'd be nice, but not ready for latin chars yet (e.g. "vía")
+      property_name = params['property_name'].to_sym
       entry = Drome.new(App)
       entry.load_json auido
       if entry.properties.include? property_name
-        msg = '<span class="warning">One more value for ' + auido + "'s " + property_name
+        msg = warning_span("One more value for #{auido}'s #{property_name}")
       else
-        msg = 'Now we know something about ' + auido + "'s " + property_name
+        msg = "Now we know something about #{auido}'s #{property_name}"
       end
       entry.add_value! property_name, params['property_value']
       return_to 'tuits/' + auido, msg
