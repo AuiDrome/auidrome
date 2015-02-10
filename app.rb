@@ -244,7 +244,7 @@ EM.run do
     end
 
     post '/admin/property/:auido' do
-      auido = params['auido']
+      auido = params['auido'].to_sym
       unless Tuit.tuit_stored?(auido) # Right now then!
         current_tuits = Tuit.current_stored_tuits
         current_tuits[auido] = Time.now.utc
@@ -259,7 +259,7 @@ EM.run do
         msg = "Now we know something about #{auido}'s #{property_name}"
       end
       entry.add_value! property_name, params['property_value']
-      return_to 'tuits/' + auido, msg
+      return_to "tuits/#{auido}", msg
     end
   end
 

@@ -13,7 +13,7 @@ module Auidrome
     end
 
     def self.tuit_stored? tuit
-      current_stored_tuits.keys.include? tuit.to_s
+      current_stored_tuits.keys.include? tuit.to_sym
     end
 
     def self.read_from_index_file auido
@@ -30,7 +30,7 @@ module Auidrome
     private
     def self.tuits_in_index_file
       if File.file?(TUITS_FILE)
-        JSON.parse(File.read(TUITS_FILE))
+        JSON.parse(File.read(TUITS_FILE), symbolize_names: true)
       else
         {}
       end
