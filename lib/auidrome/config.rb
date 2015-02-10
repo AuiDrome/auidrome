@@ -18,8 +18,12 @@ module Auidrome
       end
     end
 
+    def self.drome dromename
+      load_drome dromename.to_sym
+    end
+
     def self.pedalodrome
-      load_drome(:pedalodrome)
+      load_drome :pedalodrome
     end
 
     def drome_of_humans?

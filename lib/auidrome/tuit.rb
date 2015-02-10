@@ -12,7 +12,7 @@ module Auidrome
       @@stored_tuits ||= tuits_in_index_file
     end
 
-    def self.tuit_stored? tuit
+    def self.exists? tuit
       current_stored_tuits.keys.include? tuit.to_sym
     end
 

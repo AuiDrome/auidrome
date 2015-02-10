@@ -174,13 +174,21 @@ EM.run do
     end
 
     get "/tuits/:auido.json" do
-      content_type :'application/json'
-      tuit = drome.basic_jsonld_for(params[:auido])
-      App.save_json! tuit # if we're here file is not there
-      if pretty?
-        JSON.pretty_generate tuit
+      auido = params[:auido].to_sym
+      if Tuit.exists? auido
+        content_type :'application/json'
+        tuit = drome.basic_jsonld_for(auido)
+        App.save_json! tuit # if we're here then the JSON file is not there
+        if pretty?
+          JSON.pretty_generate tuit
+        else
+          tuit.to_json
+        end
+      elsif App.config.drome_of_humans? and # i'm from the anti-if-campaign but
+            drome = People.drome_for(auido) # let's do this only for humans :D
+        redirect to(Config.drome(drome).url + request.path)
       else
-        tuit.to_json
+        raise Sinatra::NotFound
       end
     end
 
@@ -245,7 +253,7 @@ EM.run do
 
     post '/admin/property/:auido' do
       auido = params['auido'].to_sym
-      unless Tuit.tuit_stored?(auido) # Right now then!
+      unless Tuit.exists?(auido) # Right now then!
         current_tuits = Tuit.current_stored_tuits
         current_tuits[auido] = Time.now.utc
         Tuit.store_these current_tuits
