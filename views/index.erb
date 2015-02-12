@@ -5,12 +5,10 @@
         <div class="cover-container">
           <div class="inner clearfix">
             <span id="auido_title"><%= App.config.item_name %><sup>*</sup>: </span>
-            <input id="piido" type="text" name="piido" value="" size="8" />
-<% if App.config.drome_of_humans? %>
             <form id="piar" action="/">
+              <input id="piido" type="text" name="piido" value="" size="8" />
               <button type="button" class="btn"><img src="images/think.png" class="msg-icon" data-icon="think.png" /></button>
             </form>
-<% end %>              
             <form id="tuitear" action="/tuits" method="POST">
               <button type="button" class="btn"><img src="images/shout.png" class="msg-icon" data-icon="shout.png" /></button>
             </form>

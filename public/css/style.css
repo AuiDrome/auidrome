@@ -216,6 +216,9 @@ section button {
  * Cover
  */
 
+.btn {
+  margin-top: 10px;
+}
 .cover {
   padding: 0 0px;
 }
