@@ -151,7 +151,7 @@ EM.run do
     end
 
     post "/tuits" do
-      piido = params[:piido]
+      piido = params[:piido].to_sym
       puts (current_user || 'Somebody') + " has shouted: ¡¡¡#{piido}!!!"
       current_tuits = Tuit.current_stored_tuits
       if current_tuits[piido] 
@@ -196,8 +196,8 @@ EM.run do
       content_type :'application/json'
       @ports = {}
       @properties = Config.properties_with_drome.inject({}) do |h, (k,v)|
-        @ports[v.site_name] ||= v.port_base
-        h[k] = v.site_name;
+        @ports[v.dromename] ||= v.port_base
+        h[k] = v.dromename;
         h
       end
 
@@ -207,7 +207,12 @@ EM.run do
       yml['drome_item_description'] = App.config.item_description
       yml['dromes_ports'] = @ports
       yml['property_mappings'] = @properties
+
       pretty? ? JSON.pretty_generate(yml) : yml
+    end
+
+    get "/tuits/search/:auido.json" do
+      
     end
 
     get "/tuits/better/:auido" do
@@ -284,10 +289,11 @@ EM.run do
       @clients.delete ws
     end
 
-    ws.onmessage do |liveAuido|
-      puts "WebSocket#onmessage: #{liveAuido}"
-      @clients.each do |socket|
-        socket.send(liveAuido)
+    ws.onmessage do |auido|
+      puts "WebSocket#onmessage: #{auido}"
+      if Auidrome::Search.searchable_text? auido
+        search = Auidrome::Search.new(auido, App.config.dromename)
+        ws.send(search.payload.to_json)
       end
     end
   end

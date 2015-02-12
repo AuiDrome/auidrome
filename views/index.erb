@@ -3,18 +3,20 @@
       <div class="site-wrapper-inner">
 
         <div class="cover-container">
-            <div class="inner clearfix">
-              <span id="auido_title"><%= App.config.item_name %><sup>*</sup>: </span>
-              <input id="piido" type="text" name="piido" value="" size="8" />
+          <div class="inner clearfix">
+            <span id="auido_title"><%= App.config.item_name %><sup>*</sup>: </span>
+            <input id="piido" type="text" name="piido" value="" size="8" />
 <% if App.config.drome_of_humans? %>
-              <form id="piar" action="/">
-                <button type="button" class="btn"><img src="images/think.png" class="msg-icon" data-icon="think.png" /></button>
-              </form>
+            <form id="piar" action="/">
+              <button type="button" class="btn"><img src="images/think.png" class="msg-icon" data-icon="think.png" /></button>
+            </form>
 <% end %>              
-              <form id="tuitear" action="/tuits" method="POST">
-                <button type="button" class="btn"><img src="images/shout.png" class="msg-icon" data-icon="shout.png" /></button>
-              </form>
-            </div>
+            <form id="tuitear" action="/tuits" method="POST">
+              <button type="button" class="btn"><img src="images/shout.png" class="msg-icon" data-icon="shout.png" /></button>
+            </form>
+          </div>
+
+          <div id="search"></div>
 
           <div id="content"></div>
 
@@ -28,11 +30,5 @@
       host = '<%= "http://#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT']}/" %>';
       wshost = 'ws://<%="#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT'].to_i + 1}" %>';
 
-      // Metemos en alm. local los tuits recibidos desde el servidor
-      // (si alguien decidió guardarlo y nosotros sólo lo tenemos en
-      //  local el suyo prevalece).
       var tuits_submitted = <%= @tuits_submitted %>;
-      for (var tuit in tuits_submitted){
-        localStorage.setItem(tuit, tuits_submitted[tuit]);
-      }
     </script>

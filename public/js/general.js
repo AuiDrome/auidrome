@@ -5,7 +5,6 @@ function pia() {
       var name = piido.val().toUpperCase();
       addMessage(" > pia() "+ name);
       socket.send(name);
-      localStorage.setItem(name, new Date().getTime());
       piido.val('');
     }
   } catch(exception) {
@@ -20,16 +19,8 @@ function connect() {
 
     socket.onopen = function() {
       addMessage("Socket Status: " + socket.readyState + " (open)");
-      /* Read local auidos and tuits (server tuits could overwrite local auidos) */
-      addMessage("Reading auidos in localStorage ("+localStorage.length+")");
-      for ( var i = 0, len = localStorage.length; i < len; ++i ) {
-        var key = localStorage.key(i),
-            auido = localStorage.getItem(key);
-        addMessage("  -> " + key);
-        if(key.length > 13) /* GREAT! Good bye bad luck... ;) */
-          show_tuit(auido, key);
-        else
-          show_self_piido(key);
+      for (var tuit in tuits_submitted){
+        show_tuit(tuits_submitted[tuit], tuit);
       }
     }
 
@@ -39,23 +30,47 @@ function connect() {
 
     socket.onmessage = function(msg) {
       addMessage("Received: " + msg.data);
-      show_piido(msg.data);
+      show_search_results(JSON.parse(msg.data));
     }
   } catch(exception) {
     addMessage("Error: " + exception);
   }
 }
 
-function show_piido(text, timestamp) {
-  addMessage(" > show_piido() "+ text);
-  var rendered = Mustache.render(template_piado, {auido: text, at: text});
-  $('#content').prepend(rendered);
+function add_search_item(tmpl, hash) {
+  addMessage(" > in add_search_item()");
+  var item = Mustache.render(tmpl, hash);
+  $('#search').append(item);
 }
 
-function show_self_piido(text, timestamp) {
-  addMessage(" > show_self_piido() "+ text);
-  var rendered = Mustache.render(template_piado_by_us, {auido: text, at:text});
-  $('#content').prepend(rendered);
+function show_search_results(message) {
+  addMessage(" > in show_search_results()");
+  var number_of_results = 0,
+      in_others = [];
+
+  for (result in message.results) number_of_results++;
+
+  $('#search').html('');
+  add_search_item(template_query, {query: message.query});
+
+  if(number_of_results == 0) {
+    add_search_item(template_no_results, {query: message.query});
+  }
+  else {
+    for (result in message.results) {
+      add_search_item(template_result, {
+        tuit: result,
+        at: message.results[result]
+      });
+    } 
+  }
+
+  for (other in message.in_other_dromes)
+    in_others.push(other + ' (' + message.in_other_dromes[other] + ') ');
+
+  if(in_others.length > 0) {
+    add_search_item(template_in_other_dromes, {other_dromes_results: in_others.join(', ')});
+  }
 }
 
 function show_tuit(text, at) {
@@ -93,12 +108,6 @@ $("#tuitear button").click(function(){
   }
 });
 
-$( document ).on("click", "a.remove", function(){
-  localStorage.removeItem($(this).data('key'));
-  $(this).closest('.status').remove();
-  return(false);
-});
-
 $('#property_name').addClass('lowercase');
 $('#property_form').submit(function(){
   var property_name = $('#property_name');
@@ -107,15 +116,16 @@ $('#property_form').submit(function(){
 
 function initMoustache() {
   addMessage(" > initMoustache()");
-  template_piado = $('#template_piado').html();
-  template_piado_by_us = $('#template_piado_by_us').html();
+  template_query = $('#template_query').html();
+  template_result = $('#template_result').html();
+  template_no_results = $('#template_no_results').html();
   template_tuited = $('#template_tuited').html();
-  Mustache.parse(template_piado);   // optional, speeds up future uses
-  Mustache.parse(template_piado_by_us);
+  template_in_other_dromes = $('#template_in_other_dromes').html();
+
+  Mustache.parse(template_query);   // optional, speeds up future uses
   Mustache.parse(template_tuited);
 }
 
-// TODO: some kind of order in all these JS stuff... :(
 $(function() {
   if($("#piido").length == 1) {
     connect();

@@ -49,6 +49,18 @@ body {
   font-size: 12px;
   color: #999;
 }
+#search {
+  font-size: 12px;
+  color: lightgreen;
+  margin-bottom: 30px;
+}
+
+.results_title {
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: left;
+}
 .footer {
   color: #999;
   padding-top: 19px;
@@ -95,11 +107,6 @@ html[xmlns] .clearfix {
 }
 * html .clearfix {
     height: 1%;
-}
-a.remove {
-  color: darkred;
-  margin-left: 4px;
-  font-size: 8px;
 }
 article {
   margin-bottom:20px;
@@ -260,21 +267,25 @@ article h1 {
   }
 }
 
+.results {
+  text-align: left;
+}
+
 .status {
   width:100%;
   padding:10px;
   margin-bottom:10px;
   overflow:auto;
-  
 }
 
-.status .icon {
+.status .icon, .results .icon {
   width:64px;
   height:64px;
   float: left;
+  margin-right: 10px;
 }
 
-.status p {
+.status p, .results p {
   padding:5px 10px 10px 20px;
 }
 

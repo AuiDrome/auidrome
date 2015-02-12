@@ -8,6 +8,7 @@ module Auidrome
       cfg_file ||= "config/dromes/auidrome.yml"
       cfg_file = "config/dromes/#{cfg_file.downcase}.yml" unless cfg_file =~ /^config.+yml$/
       @yaml = YAML.load_file(cfg_file)
+      @dromename = File.basename(cfg_file, '.yml').to_sym
     end
 
     def method_missing(method, *args, &block)
@@ -16,6 +17,10 @@ module Auidrome
       else
         @yaml[method.to_s] || super
       end
+    end
+
+    def dromename
+      @dromename
     end
 
     def self.drome dromename
