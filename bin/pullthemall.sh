@@ -2,53 +2,21 @@
 # Copyright 2015 The Cocktail Experience
 source 'dromeslib.sh'
 
-if [ $# -eq 0 ]; then
-  eval "$(ssh-agent -s)"
-  ssh-add ~/.ssh/id_rsa
-  option=-r
-else
+if [ $# -eq 1 ]; then
   DROME_NAMES=$1
 fi
 
 for drome in $DROME_NAMES; do
   echo "**********************************"
-  echo "*** $drome"
+  if [ $drome == "auidrome" ]
+  then
+  echo "------ AUIDROME => skipping ------"
+    continue
+  else
+    echo "*** COPYING PUBLIC FILES IN $drome"
+  fi
   echo "**********************************"
 
-  echo "Nos vamos a su directorio:"   
-  echo " > cd ../$drome"
-  cd ../$drome
-  
-  echo "Vemos que ha cambiado (normalmente tuits.json):"   
-  echo " > git status"
-  git status
-  
-
-  if [ $# -eq 0 ]; then
-    read -p "Press [Enter] key to start pulling $drome..."
-  fi
-  
-  echo "Guardamos una copia de los tuits en actualmente en producción..."
-  echo " > cp public/tuits.json ."
-  cp public/tuits.json .
-
-  echo "Checkout previo para evitar problemas..."
-  echo " > git checkout public/tuits.json"
-  git checkout public/tuits.json
-
-  echo "Hacemos el pull (machacando los cambios locales)"
-  echo " > git pull"
-  git pull
-
-  echo "Guardamos dichos tuits como los comiteados actualmente..."
-  echo " > cp public/tuits.json public/tuits.commited.json"
-  cp public/tuits.json public/tuits.commited.json
-
-  echo "Y restauramos los que teníamos:"
-  echo " > cp tuits.json public"
-  cp tuits.json public
+  run_command "cd ../$drome && cp ../auidrome/public/js/* public/js && cp ../auidrome/public/css/* public/css"
+  echo
 done
-
-if [ $# -eq 0 ]; then
-  killall ssh-agent
-fi
