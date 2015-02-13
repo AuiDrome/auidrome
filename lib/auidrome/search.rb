@@ -19,10 +19,15 @@ module Auidrome
       end
     end
 
-    def initialize(query, dromename = :auidrome)
+    def initialize(query, app)
       @query = query
       @results = grep_search_for(query)
-      @dromename = dromename
+      @app = app
+      @dromename = app.config.dromename
+    end
+
+    def conf
+      @app.config
     end
 
     def results
@@ -31,6 +36,8 @@ module Auidrome
 
     def payload
       {
+        '@context' => conf.url + "/json-context.json",
+        '@id' => conf.url + "/search?query=#{@query}",
         query: @query,
         results: @results[@dromename] || {},
         in_other_dromes: {}.tap do |others|

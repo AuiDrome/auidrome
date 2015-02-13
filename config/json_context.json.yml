@@ -1,9 +1,15 @@
 drome_name:
+# Item/tuit properties:
 drome_item_name:
 drome_item_description:
 created_at: Moment when the *auido* was first submitted.
 auido: Like 'name', just a word or short phrase that we have chosen to remember this entry (whose nature depends on the Drome where its located).
 identity: Digital itentity/ies of the owner/s of what this entry represents.
 madrino: Indentity/ies of people that think this entry is interesting (and that could know more things about it).
+# Search properties:
+query: String searched (search request only).
+results: Entries that has the query string as part of their names (search request only).
+in_other_dromes: Search results in other dromes (search request only).
+# Linking data:
 dromes_ports:
 property_mappings:

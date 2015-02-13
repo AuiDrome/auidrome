@@ -216,7 +216,7 @@ EM.run do
     #   $ curl localhost:3003/search.json?query=ALEX
     get "/search.?:format?" do
       if query = (params[:query]  || params[:piido]) and Auidrome::Search.searchable_text?(query)
-        search = Auidrome::Search.new(query, App.config.dromename)
+        search = Auidrome::Search.new(query, App)
         if params[:format] == 'json'
           content_type :'application/json'
           JSON.pretty_generate search.payload
@@ -306,7 +306,7 @@ EM.run do
     ws.onmessage do |auido|
       puts "WebSocket#onmessage: #{auido}"
       if Auidrome::Search.searchable_text? auido
-        search = Auidrome::Search.new(auido, App.config.dromename)
+        search = Auidrome::Search.new(auido, App)
         ws.send(search.payload.to_json)
       end
     end
