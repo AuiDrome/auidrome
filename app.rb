@@ -217,12 +217,16 @@ EM.run do
     get "/search.?:format?" do
       if query = (params[:query]  || params[:piido]) and Auidrome::Search.searchable_text?(query)
         search = Auidrome::Search.new(query, App)
-        if params[:format] == 'json'
-          content_type :'application/json'
-          JSON.pretty_generate search.payload
+        if search.results.any?
+          if params[:format] == 'json'
+            content_type :'application/json'
+            JSON.pretty_generate search.payload
+          else
+            @tuits_submitted = search.results[App.config.dromename].invert.to_json
+            erb :index
+          end
         else
-          @tuits_submitted = search.results[App.config.dromename].invert.to_json
-          erb :index
+          raise Sinatra::NotFound
         end
       else
         raise Sinatra::NotFound
