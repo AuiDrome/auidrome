@@ -72,6 +72,14 @@ body {
   text-transform: lowercase;
 }
 
+.pagination {
+  font-size: 18px;
+}
+
+.pagination a {
+  font-size: 14px;
+}
+
 footer a, footer a:focus, footer a:hover, a:active, a:visited {
   color: #fff;
 }

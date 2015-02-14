@@ -146,7 +146,14 @@ EM.run do
     end
 
     get "/" do
-      @tuits_submitted = Tuit.current_stored_tuits.invert.to_json
+      array = Tuit.current_stored_tuits.to_a
+      size = array.length
+      @pages = ((size - 1) / TUITS_PER_PAGE.to_f).to_i + 1
+      @page = [[params[:page].to_i, 1].max, @pages].min
+      from = size - TUITS_PER_PAGE * @page
+      to = from + TUITS_PER_PAGE - 1
+      tuits = array[([from, 0].max)..to]
+      @tuits_submitted = Hash[tuits].invert.to_json
       erb :index
     end
 

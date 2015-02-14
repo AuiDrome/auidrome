@@ -16,8 +16,21 @@
 
           <div id="search"></div>
 
+<% if @page > 1 %>
+          <div class="pagination">
+            <p>Page <%= @page %> of <%= @pages %></p>
+            <p>« <a href="?page=<%= @page - 1 %>">PREVIOUS PAGE</a> «<p>
+          </div>
+<% end %>
+
           <div id="content"></div>
 
+<% if @pages > @page %>
+          <div class="pagination">
+            <p>Page <%= @page %> of <%= @pages %></p>
+            <p>» <a href="?page=<%= @page + 1 %>">NEXT PAGE</a> »</p>
+          </div>
+<% end %>
         </div>
 
       </div>

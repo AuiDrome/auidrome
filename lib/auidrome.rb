@@ -1,5 +1,6 @@
 # Copyright 2015 The Cocktail Experience
 module Auidrome
+  TUITS_PER_PAGE = 50
   TUITS_FILE = 'public/tuits.json'
   PUBLIC_TUITS_DIR = 'public/tuits'
   PEDALERS_DIR = 'data/public/pedalodrome/tuits'
