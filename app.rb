@@ -99,14 +99,23 @@ EM.run do
         App.config.pretty_json? || params[:pretty]
       end
 
+      def referrer_could_be_a_property_value?
+        request.referrer != request.url and (request.referrer =~ /\/search\?/).nil?
+        
+      end
+
       def get_property_name_from_referrer 
-      # TODO: From the port number, vía config yml's, the dromename & from
-      #   the config/drome_property_mappings.yml get the possible names.
-        $1 if request.referrer and request.referrer =~ /:(\d+)/
+        if referrer_could_be_a_property_value?
+        # TODO: From the port number, vía config yml's, the dromename & from
+        #   the config/drome_property_mappings.yml get the possible names.
+          $1 if request.referrer and request.referrer =~ /:(\d+)/
+        end
       end
 
       def get_value_from_referrer 
-        CGI.unescape($1) if request.referrer and request.referrer =~ /\/([^\/]+)$/
+        if referrer_could_be_a_property_value?
+          CGI.unescape($1) if request.referrer and request.referrer =~ /\/([^\/]+)$/
+        end
       end
 
       def warning_span text
