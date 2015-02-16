@@ -53,6 +53,10 @@ body {
   font-size: 12px;
   color: lightgreen;
   margin-bottom: 30px;
+  text-align: left;
+}
+#search > p{
+  margin-left: 30px;
 }
 
 .results_title {

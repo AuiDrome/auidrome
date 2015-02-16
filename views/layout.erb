@@ -34,9 +34,12 @@
       </div>
     </script>
     <script id="template_in_other_dromes" type="x-tmpl-mustache">
-      <div class="results in_other_dromes">
-        <p><em>Resultado en otro/s dromo/s</em>: {{other_dromes_results}}</p>
+      <div class="results in_other_dromes_title">
+        <p><em>Resultado de <strong>{{query}}</strong> en otro/s dromo/s</em> ({{other_dromes_results}}):</p>
       </div>
+    </script>
+    <script id="template_in_other_drome_link" type="x-tmpl-mustache">
+        <p>· <a href="{{other_drome_link}}">{{other_drome_name}}</a> ({{other_drome_number}}).</p>
     </script>
 <% if App.config.drome_of_humans? %>
     <script id="template_tuited" type="x-tmpl-mustache">

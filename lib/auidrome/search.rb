@@ -34,17 +34,24 @@ module Auidrome
       @results
     end
 
+    def in_other_dromes
+      @in_other_dromes ||= {}.tap do |others|
+        (@results.keys - [@dromename]).each do |other|
+          others[other] = {
+            number_of_auidos: @results[other].length,
+            search_url: Config.drome(other).url + "/search?query=" + @query
+          }
+        end
+      end
+    end
+
     def payload
       {
         '@context' => conf.url + "/json-context.json",
         '@id' => conf.url + "/search?query=#{@query}",
         query: @query,
         results: @results[@dromename] || {},
-        in_other_dromes: {}.tap do |others|
-          (@results.keys - [@dromename]).each do |other|
-            others[other] = @results[other].length
-          end
-        end
+        in_other_dromes: in_other_dromes
       }
     end
 

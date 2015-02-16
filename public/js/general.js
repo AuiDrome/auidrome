@@ -19,8 +19,13 @@ function connect() {
 
     socket.onopen = function() {
       addMessage("Socket Status: " + socket.readyState + " (open)");
-      for (var tuit in tuits_submitted){
-        show_tuit(tuits_submitted[tuit], tuit);
+      if(tuits_submitted!=null) {
+        for (var tuit in tuits_submitted){
+          show_tuit(tuits_submitted[tuit], tuit);
+        }
+      }
+      if(search_payload!=null) {
+        show_search_results(search_payload);
       }
     }
 
@@ -43,33 +48,41 @@ function add_search_item(tmpl, hash) {
   $('#search').append(item);
 }
 
-function show_search_results(message) {
+function show_search_results(payload) {
   addMessage(" > in show_search_results()");
   var number_of_results = 0,
-      in_others = [];
+      other_dromes = payload.in_other_dromes,
+      in_others = 0;
 
-  for (result in message.results) number_of_results++;
+  for (result in payload.results) number_of_results++;
 
   $('#search').html('');
-  add_search_item(template_query, {query: message.query});
+  add_search_item(template_query, {query: payload.query});
 
   if(number_of_results == 0) {
-    add_search_item(template_no_results, {query: message.query});
+    add_search_item(template_no_results, {query: payload.query});
   }
   else {
-    for (result in message.results) {
+    for (var result in payload.results) {
       add_search_item(template_result, {
         tuit: result,
-        at: message.results[result]
+        at: payload.results[result]
       });
     } 
   }
 
-  for (other in message.in_other_dromes)
-    in_others.push(other + ' (' + message.in_other_dromes[other] + ') ');
+  for (var other in other_dromes)
+    in_others += other_dromes[other]['number_of_auidos'];
 
-  if(in_others.length > 0) {
-    add_search_item(template_in_other_dromes, {other_dromes_results: in_others.join(', ')});
+  if(in_others > 0) {
+    add_search_item(template_in_other_dromes, {other_dromes_results: in_others});
+    for (other in other_dromes) {
+      add_search_item(template_in_other_drome_link, {
+        other_drome_name: other,
+        other_drome_link: other_dromes[other]['search_url'],
+        other_drome_number: other_dromes[other]['number_of_auidos']
+      });
+    }
   }
 }
 
@@ -121,6 +134,7 @@ function initMoustache() {
   template_no_results = $('#template_no_results').html();
   template_tuited = $('#template_tuited').html();
   template_in_other_dromes = $('#template_in_other_dromes').html();
+  template_in_other_drome_link = $('#template_in_other_drome_link').html();
 
   Mustache.parse(template_query);   // optional, speeds up future uses
   Mustache.parse(template_tuited);

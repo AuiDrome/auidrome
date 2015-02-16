@@ -7,7 +7,7 @@
           <div class="inner clearfix">
             <span id="auido_title"><%= App.config.item_name %><sup>*</sup>: </span>
             <form id="piar" action="/">
-              <input id="piido" type="text" name="piido" value="" size="8" />
+              <input id="piido" type="text" name="piido" value="<%= @query %>" size="8" />
               <button type="button" class="btn"><img src="images/think.png" class="msg-icon" data-icon="think.png" /></button>
             </form>
             <form id="tuitear" action="/tuits" method="POST">
@@ -38,9 +38,10 @@
     </div>
 
     <script>
-      var socket, host, wshost, template;
+      var socket, host, wshost;
       host = '<%= "http://#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT']}/" %>';
       wshost = 'ws://<%="#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT'].to_i + 1}" %>';
 
-      var tuits_submitted = <%= @tuits_submitted %>;
+      var tuits_submitted = <%= @tuits_submitted || 'null' %>;
+      var search_payload = <%= @search_payload || 'null' %>;
     </script>

@@ -222,14 +222,14 @@ EM.run do
     # For example:
     #   $ curl localhost:3003/search.json?query=ALEX
     get "/search.?:format?" do
-      if query = (params[:query]  || params[:piido]) and Auidrome::Search.searchable_text?(query)
-        search = Auidrome::Search.new(query, App)
+      if @query = (params[:query]  || params[:piido]) and Auidrome::Search.searchable_text?(@query)
+        search = Auidrome::Search.new(@query, App)
         if search.results.any?
           if params[:format] == 'json'
             content_type :'application/json'
             JSON.pretty_generate search.payload
           else
-            @tuits_submitted = search.results[App.config.dromename].invert.to_json
+            @search_payload = search.payload.to_json
             erb :index
           end
         else
