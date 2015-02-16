@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/css/style.css?version=20150212002">
+    <link rel="stylesheet" href="/css/style.css?version=20150216002">
 
     <script src="/js/jquery-1.11.0.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -23,9 +23,13 @@
     </script>
     <script id="template_result" type="x-tmpl-mustache">
       <div class="results">
+<% if App.config.drome_of_humans? %>
         <a href="/tuits/{{tuit}}"><img src="/images/{{tuit}}.png" onerror="this.src = '/images/frijolito.png'" alt="{{tuit}} avatar or default avatar" class="img-thumbnail icon"/></a>
-        <p><strong>{{tuit}}</strong>: {{at}}</p>
+        <p><a href="/tuits/{{tuit}}">{{tuit}}</a>: {{at}}</p>
         <p>· <a href="/tuits/{{tuit}}.json">JSON FILE</a> ·</p>
+<% else %>
+        <p>· <a href="/tuits/{{tuit}}">{{tuit}}</a> ({{at}} - <a href="/tuits/{{tuit}}.json">JSON</a>)</p>
+<% end %>
       </div>
     </script>
     <script id="template_no_results" type="x-tmpl-mustache">
@@ -41,19 +45,17 @@
     <script id="template_in_other_drome_link" type="x-tmpl-mustache">
         <p>· <a href="{{other_drome_link}}">{{other_drome_name}}</a> ({{other_drome_number}}).</p>
     </script>
-<% if App.config.drome_of_humans? %>
     <script id="template_tuited" type="x-tmpl-mustache">
+<% if App.config.drome_of_humans? %>
       <div class="status">
         <a href="/tuits/{{tuit}}"><img src="/images/{{tuit}}.png" onerror="this.src = '/images/frijolito.png'" alt="{{tuit}} avatar or default avatar" class="img-thumbnail icon"/></a>
         <p><%= App.config.tuit_sentence %></p>
         <p><%= App.config.tuit_consideration %></p>
       </div>
-    </script>
 <% else %>
-    <script id="template_tuited" type="x-tmpl-mustache">
-        <p>* <strong><a href="/tuits/{{tuit}}">{{tuit}}</strong></a> ({{at}})</p>
-    </script>
+        <p>* <a href="/tuits/{{tuit}}">{{tuit}}</a> ({{at}})</p>
 <% end %>
+    </script>
 
     <div class="dromes-links">
       <div class="dromes-links-inner">
@@ -117,6 +119,6 @@
     </div>
 
 
-    <script src="/js/general.js?version=20150212002"></script>
+    <script src="/js/general.js?version=20150216002"></script>
   </body>
 </html>
