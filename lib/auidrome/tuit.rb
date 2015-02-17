@@ -7,7 +7,7 @@ module Auidrome
         f.write JSON.pretty_generate(tuits)
       end 
     end
-    
+
     def self.current_stored_tuits
       @@stored_tuits ||= tuits_in_index_file
     end
@@ -19,7 +19,7 @@ module Auidrome
     def self.read_from_index_file auido
       {
         auido: auido,
-        created_at: Tuit.current_stored_tuits[auido] || 'NOT FOUND!'
+        created_at: Tuit.current_stored_tuits[auido.to_sym] || 'NOT FOUND!'
       }
     end
 
