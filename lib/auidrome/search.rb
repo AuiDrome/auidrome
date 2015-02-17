@@ -4,7 +4,7 @@ module Auidrome
   class Search
     class << self
       def searchable_regexp
-        /[\w ÁÉÍÓÚÜ¿?¡!'\.]+/
+        /[\w ÁÉÍÓÚÑÜ¿?¡!':\.]+/
       end
 
       def searchable_text? str
