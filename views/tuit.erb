@@ -1,12 +1,12 @@
 
     <div class="site-wrapper">
       <div class="site-wrapper-inner">
-        <div class="cover-container">
+        <div<%= ' class="cover-container"' unless @image_quality > 1 %>>
           <section id="tuit" class="<%= App.config.drome_of_humans? ? 'human' : 'other' %>">
             <article>
 <% if App.config.drome_of_humans? %>
               <a href="<%= @drome_entry.image_href %>">
-                <img src="<%= @drome_entry.image_src %>" alt="<%= @drome_entry.auido %> image" class="img-thumbnail icon"/>
+                <img src="<%= @drome_entry.image_src %>" alt="<%= @drome_entry.auido %> image" class="<%= @drome_entry.image_class %> icon"/>
               </a>
 <% end %>
                 <h1 id="auido">

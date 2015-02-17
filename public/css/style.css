@@ -274,6 +274,11 @@ article h1 {
   }
 }
 
+.img {
+  float: none;
+  width: 95%;
+}
+
 @media (min-width: 992px) {
   .masthead,
   .mastfoot,

@@ -142,6 +142,13 @@ EM.run do
       redirect to(path || '/')
     end
 
+    def render_tuit_view image_quality
+      @image_quality = image_quality
+      @page_title = params[:auido]
+      @drome_entry = drome.load_json(params[:auido], current_user, image_quality)
+      erb :tuit
+    end
+
     get '/auth/twitter/callback' do
       session[:uid] = env['omniauth.auth']['uid']
       session[:provider] = :twitter
@@ -249,16 +256,20 @@ EM.run do
       end
     end
 
+    get "/tuits/better/better/better/:auido" do
+      render_tuit_view 3 
+    end
+
+    get "/tuits/better/better/:auido" do
+      render_tuit_view 2 
+    end
+
     get "/tuits/better/:auido" do
-      @page_title = params[:auido]
-      @drome_entry = drome.load_json(params[:auido], current_user, 1) # depth => 1
-      erb :tuit
+      render_tuit_view 1 
     end
 
     get "/tuits/:auido" do
-      @page_title = params[:auido]
-      @drome_entry = drome.load_json(params[:auido], current_user) # depth => 0
-      erb :tuit
+      render_tuit_view 0 
     end
 
     get "/admin" do

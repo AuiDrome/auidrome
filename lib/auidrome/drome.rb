@@ -73,10 +73,14 @@ module Auidrome
 
     def image_href
       if better_image?
-        "/tuits/better/#{@hash[:auido]}"
+        "/tuits" + "/better" * (image_quality + 1) + "/#{@hash[:auido]}"
       else
         "/tuits/#{@hash[:auido]}"
       end
+    end
+
+    def image_class
+      image_quality == 0 ? 'img-thumbnail' : 'img'
     end
 
     def better_image?
