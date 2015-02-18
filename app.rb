@@ -174,7 +174,7 @@ EM.run do
     end
 
     post "/tuits" do
-      piido = params[:piido].to_sym
+      piido = params[:piido].strip.to_sym
       puts (current_user || 'Somebody') + " has shouted: ¡¡¡#{piido}!!!"
       current_tuits = Tuit.current_stored_tuits
       if current_tuits[piido] 
@@ -308,7 +308,7 @@ EM.run do
         current_tuits[auido] = Time.now.utc
         Tuit.store_these current_tuits
       end
-      property_name = params['property_name'].to_sym
+      property_name = params['property_name'].strip.to_sym
       entry = Drome.new(App)
       entry.load_json auido
       if entry.properties.include? property_name
