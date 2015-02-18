@@ -279,9 +279,8 @@ EM.run do
 
     get "/admin/its-me/:auido" do
       auido = params['auido']
-      entry = Drome.new(App)
-      entry.load_json auido
-      if entry.indentity.include? current_user
+      entry = drome.load_json auido
+      if entry.identity.include? current_user
         msg = '<span class="warning">Yes, we already knew that! :)</span>.'
       else
         entry.add_identity! current_user 
