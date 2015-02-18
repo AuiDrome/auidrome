@@ -106,8 +106,8 @@ module Auidrome
 
     def basic_jsonld_for auido
       {
-        '@context' => conf.url + "/json-context.json",
-        '@id' => conf.url + "/tuits/#{auido}"
+        '@context' => conf.url + "json-context.json",
+        '@id' => conf.url + "tuits/#{auido}"
       }.merge(basic_data_for(auido))
     end
 

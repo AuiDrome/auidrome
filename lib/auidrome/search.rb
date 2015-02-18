@@ -39,7 +39,7 @@ module Auidrome
         (@results.keys - [@dromename]).each do |other|
           others[other] = {
             number_of_auidos: @results[other].length,
-            search_url: Config.drome(other).url + "/search?query=" + @query
+            search_url: Config.drome(other).url + "search?query=" + @query
           }
         end
       end
@@ -47,8 +47,8 @@ module Auidrome
 
     def payload
       {
-        '@context' => conf.url + "/json-context.json",
-        '@id' => conf.url + "/search?query=#{@query}",
+        '@context' => conf.url + "json-context.json",
+        '@id' => conf.url + "search?query=#{@query}",
         query: @query,
         results: @results[@dromename] || {},
         in_other_dromes: in_other_dromes

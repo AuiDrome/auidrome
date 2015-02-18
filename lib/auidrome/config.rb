@@ -44,7 +44,7 @@ module Auidrome
     end
 
     def url
-      "http://#{domain_and_port}"
+      "http://#{domain_and_port}/"
     end
 
     def self.drome_mapping_for name, value

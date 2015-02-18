@@ -214,6 +214,11 @@ section button {
   display: block;
 }
 
+.autocomplete-suggestions { font-size: 12px; border: 1px solid #999; background: black; color: white; cursor: default; overflow: auto; }
+.autocomplete-suggestion { font-size: 1.2em; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #595959 }
+.autocomplete-suggestions strong { font-weight: normal; color: lightgreen; }
+
 @media (min-width: 768px) {
   .masthead-brand {
     float: left;

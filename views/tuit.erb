@@ -77,6 +77,14 @@
             </article>
 
 <% if current_user %>
+              <script src="/js/jquery.autocomplete.min.js"></script>
+              <script>
+                $(function(){
+                  var property_names_with_mapped_drome = <%= @property_names_for_autocomplete.to_json %>;
+                  $('#property_name').autocomplete({lookup: property_names_with_mapped_drome});
+                });
+              </script>
+
               <form id="property_form" action="/admin/property/<%= @drome_entry.auido %>" method="POST" >
                 <input id="property_name" type="text" name="property_name" value="<%= get_property_name_from_referrer %>" size="8" />
                 <input id="property_value" type="text" name="property_value" value="<%= get_value_from_referrer %>" />

@@ -100,14 +100,14 @@ EM.run do
       end
 
       def referrer_could_be_a_property_value?
-        request.referrer != request.url and (request.referrer =~ /\/search\?/).nil?
+        request.referrer != request.url and
+          request.referrer != App.config.url and
+            (request.referrer =~ /\/search\?/).nil?
         
       end
 
       def get_property_name_from_referrer 
         if referrer_could_be_a_property_value?
-        # TODO: From the port number, vía config yml's, the dromename & from
-        #   the config/drome_property_mappings.yml get the possible names.
           $1 if request.referrer and request.referrer =~ /:(\d+)/
         end
       end
@@ -146,6 +146,7 @@ EM.run do
       @image_quality = image_quality
       @page_title = params[:auido]
       @drome_entry = drome.load_json(params[:auido], current_user, image_quality)
+      @property_names_for_autocomplete = Config.property_names_with_associated_drome.map{|p| {value: p}}
       erb :tuit
     end
 
