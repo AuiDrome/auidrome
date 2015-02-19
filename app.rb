@@ -101,9 +101,9 @@ EM.run do
 
       def referrer_could_be_a_property_value?
         request.referrer != request.url and
-          request.referrer != App.config.url and
-            (request.referrer =~ /\/search\?/).nil?
-        
+        request.referrer != App.config.url and
+        (request.referrer =~ /\/better\//).nil? and (request.url =~ /\/better\//).nil? and
+        (request.referrer =~ /\/search\?/).nil?
       end
 
       def get_property_name_from_referrer 
