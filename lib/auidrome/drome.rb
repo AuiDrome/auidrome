@@ -163,7 +163,7 @@ module Auidrome
     def image_of_quality quality
       prefix = quality > 0 ? "#{(['better']*quality).join('/')}/" : ""
       basepath = "/images/#{prefix}" + @hash[:auido] 
-      %w{jpg png gif jpeg}.each do |extension|
+      %w{gif jpeg jpg png}.each do |extension|
         filepath = "#{basepath}.#{extension}"
         return filepath if File.exists?("public" + filepath)
       end
