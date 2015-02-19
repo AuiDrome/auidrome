@@ -80,7 +80,7 @@ module Auidrome
     end
 
     def image_class
-      image_quality == 0 ? 'img-thumbnail' : 'img'
+      image_quality == 0 ? 'img-thumbnail' : 'img-normal'
     end
 
     def better_image?
