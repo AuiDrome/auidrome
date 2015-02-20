@@ -110,10 +110,18 @@ The project comes from a [Codetail](http://github.com/nando/piidos-compartidos-c
 
 After a personal Hackaton i've been able to finish an "alfa-but-working" first release into the last hours of the Human Rights Day, and i'll update OTAONY.com with a link to it tomorrow morning.
 
-That has already been a great day for those of us who think and care about our rights on the Internet, since http://ind.ie has been able to meet and exceed the goal of raising 100,000 crowdfunded dollars.
+This has already been a great day for those of us who think and care about our rights on the Internet, since http://ind.ie has been able to meet and exceed the goal of raising 100,000 crowdfunded dollars.
 
-Much more important than my economical contribution to that project is for me this shared present that is also for my mother, Ana (though her birthday has finished more than an hour ago... I almost did it! ;). Hope it'll become something joining to any other projects with the same or bigger goals.
+Much more important than my economical contribution to that project is for me this shared present that is also for my mother, Ana (though her birthday has finished more than an hour ago... I almost did it! ;). I hope it'll become something joining to any other projects with the same or bigger goals.
 
-## License
+And finally, just like many other good things Auidrome is built with [love, Internet style](http://www.youtube.com/watch?v=Xe1TZaElTAs).
 
-*AuiDrome* is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+## Copyright / License
+
+Copyright 2015 The Cocktail Experience, S.L.
+
+Licensed under the GNU General Public License Version 3.0 (or later); you may not use this work except in compliance with the License. You may obtain a copy of the License in the COPYING file, or at:
+
+http://www.gnu.org/licenses/gpl-3.0.txt
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
