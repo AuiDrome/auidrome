@@ -1,14 +1,15 @@
+# Copyright 2015 The Cocktail Experience
 require 'json'
 module Auidrome
   class AccessLevel
     def self.pedaler? identity
-      false # TODO: search into the Pedelodrome
+      !Auidrome::People.pedalers[identity.to_sym].nil?
     end
     def self.can_read_protected? reader, public_data
-      pedaler?(reader) || public_data['madrinos'].include?(reader) rescue false
+      pedaler?(reader) || public_data['madrino'].include?(reader) rescue false
     end
     def self.can_read_private? reader, public_data
-      public_data['identities'].include?(reader) rescue false
+      public_data['identity'].include?(reader) rescue false
     end
   end
 end

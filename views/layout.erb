@@ -1,5 +1,4 @@
 <!doctype html>
-<% remove_link = '<a class="remove" data-key="{{at}}" href="#" title="Remove local copy">REMOVE</a>' %>
 <html>
   <head>
     <meta charset="utf-8">
@@ -8,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?version=20150218001">
 
     <script src="/js/jquery-1.11.0.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -17,31 +16,65 @@
   </head>
 
   <body>
-    <script id="template_piado" type="x-tmpl-mustache">
-      <div class="status">
-        <img src="/images/{{auido}}.png" onerror="this.src = '/images/frijolito.png'" class="img-thumbnail icon"/>
-        <p>somebody is thinking <strong>{{auido}}</strong> and has stored it LOCALLY</p>
-        <p>(we hear this thought through our webSockets: nothing is stored NOWHERE ELSE)</p>
+    <script id="template_query" type="x-tmpl-mustache">
+      <div class="results_title">
+        <p>Resultados para '<strong>{{query}}</strong>' (<a href="/search.json?query={{query}}">resultados en formato JSON</a>):</p>
       </div>
     </script>
-    <script id="template_piado_by_us" type="x-tmpl-mustache">
-      <div class="status">
-        <img src="/images/{{auido}}.png" onerror="this.src = '/images/frijolito.png'" class="img-thumbnail icon"/>
-        <p>you thought <strong>{{auido}}</strong> and stored that thought locally. <%= remove_link %></p>
-        <p>(heard it through the server webSockets but nothing was stored nowhere else)</p>
+    <script id="template_result" type="x-tmpl-mustache">
+      <div class="results">
+<% if App.config.drome_of_humans? %>
+        <a href="/tuits/{{tuit}}"><img src="/images/{{tuit}}.png" onerror="this.src = '/images/frijolito.png'" alt="{{tuit}} avatar or default avatar" class="img-thumbnail icon"/></a>
+        <p><a href="/tuits/{{tuit}}">{{tuit}}</a>: {{at}}</p>
+        <p>· <a href="/tuits/{{tuit}}.json">JSON FILE</a> ·</p>
+<% else %>
+        <p>· <a href="/tuits/{{tuit}}">{{tuit}}</a> ({{at}} - <a href="/tuits/{{tuit}}.json">JSON</a>)</p>
+<% end %>
       </div>
+    </script>
+    <script id="template_no_results" type="x-tmpl-mustache">
+      <div class="results no-results">
+      <p>No se han encontrado resultados para '<strong>{{query}}</strong>'</p>
+      </div>
+    </script>
+    <script id="template_in_other_dromes" type="x-tmpl-mustache">
+      <div class="results in_other_dromes_title">
+        <p><em>Resultado de <strong>{{query}}</strong> en otro/s dromo/s</em> ({{other_dromes_results}}):</p>
+      </div>
+    </script>
+    <script id="template_in_other_drome_link" type="x-tmpl-mustache">
+        <p>· <a href="{{other_drome_link}}">{{other_drome_name}}</a> ({{other_drome_number}}).</p>
     </script>
     <script id="template_tuited" type="x-tmpl-mustache">
+<% if App.config.drome_of_humans? %>
       <div class="status">
         <a href="/tuits/{{tuit}}"><img src="/images/{{tuit}}.png" onerror="this.src = '/images/frijolito.png'" alt="{{tuit}} avatar or default avatar" class="img-thumbnail icon"/></a>
-
         <p><%= App.config.tuit_sentence %></p>
-        <p><%= App.config.tuit_consideration %> <%= remove_link %></p>
+        <p><%= App.config.tuit_consideration %></p>
       </div>
+<% else %>
+        <p>* <a href="/tuits/{{tuit}}">{{tuit}}</a> ({{at}})</p>
+<% end %>
     </script>
+
+    <div class="dromes-links">
+      <div class="dromes-links-inner">
+        <% [
+             %w{Auidrome Petodrome Vegidrome Fictiondrome},
+             %w{Docudrome Eventodrome Projectdrome Machinedrome}
+           ].each do |dromes| %>
+        <div>
+          <% dromes.map{|dromename| Auidrome::Config.new(dromename)}.each do |drome| %>
+          <a href="http://<%= drome.domain_and_port %>"><%= drome.site_name %></a>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
     <div class="toolbar">
 <% if current_user %>
-      You're <strong>@<%= current_user %></strong> in our...
+      You're <strong><%= current_user %></strong> in our...
 <% else %>
       <a href="http://OTAONY.com">OTAONY.com</a>
 <% end %>
@@ -69,7 +102,7 @@
            ].each do |dromes| %>
         <div>
           <% dromes.map{|dromename| Auidrome::Config.new(dromename)}.each do |drome| %>
-          <a href="http://<%= drome.base_domain %>:<%= drome.port_base %>"><%= drome.site_name %></a>
+          <a href="http://<%= drome.domain_and_port %>"><%= drome.site_name %></a>
           <% end %>
         </div>
         <% end %>
@@ -85,20 +118,7 @@
 <% end %>
     </div>
 
-    <script>
-      var socket, host, wshost, template;
-      host = '<%= "http://#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT']}/" %>';
-      wshost = 'ws://<%="#{request.env['SERVER_NAME']}:#{request.env['SERVER_PORT'].to_i + 1}" %>';
 
-      // Metemos en alm. local los tuits recibidos desde el servidor
-      // (si alguien decidió guardarlo y nosotros sólo lo tenemos en
-      //  local el suyo prevalece).
-      var tuits_submitted = <%= @tuits_submitted %>;
-      for (var tuit in tuits_submitted){
-        localStorage.setItem(tuit, tuits_submitted[tuit]);
-      }
-    </script>
-
-    <script src="/js/general.js"></script>
+    <script src="/js/general.js?version=20150218001"></script>
   </body>
 </html>

@@ -1,0 +1,7 @@
+port_base: 40004
+site_name: Machinedrome
+site_tagline: They work for us, not the opposite.
+item_name: Machine
+item_description: A very useful and green device.
+tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
+tuit_consideration: <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> do things even better than a human!

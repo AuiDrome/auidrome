@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copyright 2015 The Cocktail Experience
 
 # Read the dromes from config/dromes file names... 
 dromes=()

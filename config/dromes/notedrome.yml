@@ -1,7 +1,7 @@
 port_base: 10003
-site_name: Thoughtsdrome
+site_name: Notedrome
 site_tagline: Thinkings (#monolog's), dialogs... and even conversations!
-item_name: Reflexion
-item_description: Piece of data shorted that deserves to be cosumed by the people
+item_name: Note
+item_description: Thought that deserves to be consumed at least for you again (and maybe removed then)
 tuit_sentence: the {{at}} somebody storaged <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> in our server (<a href="/tuits.json">here!</a>).
 tuit_consideration: For sure <strong><a href="/tuits/{{tuit}}">{{tuit}}</a></strong> is important to reach THE FIX we need.

@@ -1,74 +1,96 @@
 
     <div class="site-wrapper">
       <div class="site-wrapper-inner">
-        <div class="cover-container">
-          <section id="tuit">
+        <div<%= ' class="cover-container"' unless @image_quality > 1 %>>
+          <section id="tuit" class="<%= App.config.drome_of_humans? ? 'human' : 'other' %>">
             <article>
-                <img src="/images/<%= @human.auido %>.png" onerror="this.src = '/images/frijolito.png'" alt="<%= @human.auido %> avatar or default avatar" class="img-thumbnail icon"/>
+<% if App.config.drome_of_humans? %>
+              <a href="<%= @drome_entry.image_href %>">
+                <img src="<%= @drome_entry.image_src %>" alt="<%= @drome_entry.auido %> image" class="<%= @drome_entry.image_class %> icon"/>
+              </a>
+<% end %>
                 <h1 id="auido">
-                  <%= @human.auido %>
+                  <%= @drome_entry.auido %>
                 </h1>
-<% if @human.identities.any? %>
+<% if App.config.drome_of_humans? and @drome_entry.identity.any? %>
                 <span class="identities">
-                (<% @human.identities.each do |identity| %><span class="identity">@<%= identity %></span><% end %>)
+                (<% @drome_entry.identity.each do |identity| %><span class="identity">@<%= identity %></span> <% end %>)
                 </span>
 <% end %>
                 <div class="tuit-properties">
                   <div>Created at
-                    <span class="date" id="date"><%= @human.created_at %></span>
+                    <span class="date" id="date"><%= @drome_entry.created_at %></span>
                   </div>
 
-<% if @human.madrinos.any? %>
-                  <div>Announcer<%= 's' if @human.madrinos.size > 1 %>
-                  <% @human.madrinos.each do |madrino| %><span class="madrinos">@<%= madrino %></span><% end %>
+<% if @drome_entry.madrino.any? %>
+                  <div><%= App.config.drome_of_humans? ? 'Madrino' : 'Announcer' %><%= 's' if @drome_entry.madrino.size > 1 %>
+                  <% @drome_entry.madrino.each do |madrino| %>
+                    <span class="madrino">
+                  <%   if pedaler = Auidrome::People.pedalers[madrino.to_sym] %>
+                         <a href="<%= Auidrome::Config.pedalodrome.url %>/tuits/<%= pedaler %>"><%= pedaler %></a>
+                  <%   else %>
+                         <%= madrino %>
+                  <%   end %>
+                    </span>
+                  <% end %>
                   </div>
 <% end %>
 
-<% (@human.properties - @human.core_properties).each do |property_name| %>
+<%# Identity and trust/hope buttons :) %>
+<% unless (@drome_entry.madrino + @drome_entry.identity).include? current_user %>
+  <% unless %w{Auidrome Ripodrome Fictiondrome}.include?(App.config.site_name) %>
+                  <form action="/admin/its-me/<%= @drome_entry.auido %>">
+                    <button><%= me_or_by_me_button_text %></button>
+                  </form>
+  <% end %>
+  <% unless @drome_entry.madrino.include? current_user %>
+                  <form action="/admin/amadrinate/<%= @drome_entry.auido %>">
+                    <button><%= amadrinate_or_authorship_button_text %></button>
+                  </form>
+  <% end %>
+<% end %>
+
+<%# Properties %>
+                  <div class="other-properties clearfix">
+<% (@drome_entry.properties - @drome_entry.core_properties).each do |property_name| %>
 <%# TODO(CRITICAL): PARSE THIS ATTR BEFORE DOING ANYTHING WITH IT!!!! %>
 <%# TODO: DO ALL THIS BETTER/WELL-DONE (add HAML?) %>
-<%   enum_value = @human.enumerable(property_name) %>
-                  <div>
-                    <span class="property_name"><%= property_name %><%= 's' if enum_value.size > 1 %></span>
-                    <span class="property_value <%= property_name %>">
+<%   enum_value = @drome_entry.enumerable(property_name) %>
+                    <div>
+                      <span class="property_name"><%= property_name %></span>
+                      <span class="property_value <%= property_name %>">
 <%   enum_value.each do |value| %>
-                      <span>
+                        <span>
 
-<%     if @human.hrefable_property? property_name, value %>
-                        <a href="<%= @human.href_for property_name, value %>"><%= value %></a>
+<%     if @drome_entry.hrefable_property? property_name, value %>
+                          <a href="<%= @drome_entry.href_for property_name, value %>"><%= value %></a>
 <%     else %>
-                        <%= value %>
+                          <%= value %>
 <%     end %>
-                      </span>
+                        </span>
 <%   end %>
-                    </span>
-                  </div>
+                      </span>
+                    </div>
 <% end %>
+                  </div>
                 </div>
             </article>
 
-<% unless (@human.madrinos + @human.identities).include? current_user %>
-
-  <% unless %w{Auidrome Ripodrome}.include?(App.config.site_name) %>
-              <form action="/admin/its-me/<%= @human.auido %>">
-                <button>By me</button>
-              </form>
-  <% end %>
-  <% unless @human.madrinos.include? current_user %>
-              <form action="/admin/amadrinate/<%= @human.auido %>">
-                <button>By other</button>
-              </form>
-  <% end %>
-
-<% end %>
 <% if current_user %>
-              <form id="property_form" action="/admin/property/<%= @human.auido %>" method="POST" >
-                <input id="property_name" type="text" name="property_name" value="" size="8" />
-                <input id="property_value" type="text" name="property_value" value="" />
+              <script src="/js/jquery.autocomplete.min.js"></script>
+              <script>
+                $(function(){
+                  var property_names_with_mapped_drome = <%= @property_names_for_autocomplete.to_json %>;
+                  $('#property_name').autocomplete({lookup: property_names_with_mapped_drome});
+                });
+              </script>
+
+              <form id="property_form" action="/admin/property/<%= @drome_entry.auido %>" method="POST" >
+                <input id="property_name" type="text" name="property_name" value="<%= get_property_name_from_referrer %>" size="8" />
+                <input id="property_value" type="text" name="property_value" value="<%= get_value_from_referrer %>" />
                 <button>Push!</button>
               </form>
 <% end %>
-
           </section>
         </div>
       </div>

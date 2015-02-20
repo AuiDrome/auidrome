@@ -2,7 +2,7 @@
 
 ![Pair of Huia](https://upload.wikimedia.org/wikipedia/commons/0/00/Huia_Buller.jpg)
 
-**Aui**: onomatopoeic fragment of the extinct Huia voice (trying to catch its "where-are-you" sound [0]).
+**Aui**: onomatopoeic fragment of the extinct Huia voice (trying to catch its "where-you-are" sound [0]).
 
 **Drome**: a place where people can get in, and from some of them people can also get out.
 
@@ -90,6 +90,8 @@ If you want to test it make the next steps:
 
 ## Config and run...
 
+To generate pretty JSON files simply create a file in the *config* directory called **generate_pretty_json**.
+
 A Auidrome site, or *"a drome"*, is launched running the *bin/auidrome.rb* script.
 
 Any *drome* should have its configuration on the *config/dromes* directory.
@@ -99,6 +101,8 @@ If *auidrome.rb* runs with no arguments it will use config/dromes/*auidrome*.yml
 To use a diferent one we have to give it as argument. For instance:
 
     $ ./bin/auidrome.rb config/dromes/ripodrome.yml
+
+Other files in the *config* directory should be self-explanatory.
 
 ## Origin and Dedications
 
